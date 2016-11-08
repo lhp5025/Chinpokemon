@@ -6,6 +6,7 @@
 package world;
 
 import game.GameObject;
+import game.Vector;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -20,28 +21,27 @@ public class World {
     private final GameObject game_data;
     private ArrayList<Zone> zones = new ArrayList<>();
     private Zone current_zone;
-    private Point2D player_location = new Point2D.Double(0.0, 0.0);
+    private Vector player_location = new Vector(0.0, 0.0);
 
     private boolean collisionDetection(double x, double y) {
         return false;
     }
 
-    public void movePlayer(Point2D _input) {
+    public void movePlayer(Vector _input) {
         double movement_speed = 0.005 * game_data.getDelta_time();
         double magnitude = Math.sqrt(_input.getX() * _input.getX() + _input.getY() * _input.getY());
 
         if (magnitude != 0) {
             Point2D normal = new Point.Double(_input.getX() / magnitude, _input.getY() / magnitude);
             if (player_location.getX() + normal.getX() * movement_speed >= 0.0 && player_location.getY() + normal.getY() * movement_speed >= 0.0) {
-                player_location.setLocation(player_location.getX() + normal.getX() * movement_speed,
-                        player_location.getY() + normal.getY() * movement_speed);
+                player_location.incLocation(normal.getX() * movement_speed, normal.getY() * movement_speed);
             }
 
         }
 
     }
 
-    public Point2D getPlayer_location() {
+    public Vector getPlayer_location() {
         return player_location;
     }
 
