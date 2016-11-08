@@ -13,6 +13,10 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +36,7 @@ public class GameObject extends JFrame implements Runnable {
     private final JLayeredPane game_panels;
     private final GamePanel game_render_panel;
     private final JLabel _rnder_time_text = new JLabel();
-    private Point2D player_movement_input_vector = new Point2D.Double(0.0, 0.0);
+    private Vector player_movement_input_vector = new Vector(0.0, 0.0);
     
     
     public final World world = new World(this);
@@ -47,6 +51,7 @@ public class GameObject extends JFrame implements Runnable {
         this.setSize(800, 600);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.addKeyListener( new KeyBindings() );
+        this.addMouseWheelListener( new MouseBindings() );
         
         game_panels = new JLayeredPane();
         game_panels.setDoubleBuffered(true);
@@ -91,6 +96,16 @@ public class GameObject extends JFrame implements Runnable {
 
     }
     
+    public class MouseBindings implements MouseWheelListener {
+
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent e) {
+            System.out.println(e.getWheelRotation() );
+            game_render_panel.zoom(e.getWheelRotation());
+        }
+
+    }
+    
     public class KeyBindings implements KeyListener {
 
         @Override
@@ -101,25 +116,40 @@ public class GameObject extends JFrame implements Runnable {
         @Override
         public void keyPressed(KeyEvent ke) {
             //System.out.println(ke + "KEY PRESSED: ");
-            switch ( ke.getKeyChar() ) {
-                case 'w':
-                    player_movement_input_vector.setLocation(0, -1.0);
-                    break;
-                case 'a':
-                    player_movement_input_vector.setLocation(-1.0, 0);
-                    break;
-                case 's':
-                    player_movement_input_vector.setLocation(0,  1.0);
-                    break;
-                case 'd':
-                    player_movement_input_vector.setLocation(1.0 , 0);
-                    break;
+            if (ke.getKeyChar() == 'w'){
+                player_movement_input_vector.setY(-1);
             }
+            
+            if (ke.getKeyChar() == 'a'){
+                player_movement_input_vector.setX(-1);
+            }
+            
+            if (ke.getKeyChar() == 's'){
+                player_movement_input_vector.setY(1);
+            }
+            
+            if (ke.getKeyChar() == 'd'){
+               player_movement_input_vector.setX(1);
+            } 
         }
 
         @Override
         public void keyReleased(KeyEvent ke) {
-            player_movement_input_vector.setLocation(0, 0);
+            if (ke.getKeyChar() == 'w'){
+                player_movement_input_vector.setY(0);
+            }
+            
+            if (ke.getKeyChar() == 'a'){
+                player_movement_input_vector.setX(0);
+            }
+            
+            if (ke.getKeyChar() == 's'){
+                player_movement_input_vector.setY(0);
+            }
+            
+            if (ke.getKeyChar() == 'd'){
+               player_movement_input_vector.setX(0);
+            } 
         }
         
     }
