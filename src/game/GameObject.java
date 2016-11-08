@@ -100,7 +100,7 @@ public class GameObject extends JFrame implements Runnable {
 
         @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
-            System.out.println(e.getWheelRotation() );
+            //System.out.println(e.getWheelRotation() );
             game_render_panel.zoom(e.getWheelRotation());
         }
 
