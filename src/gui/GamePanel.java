@@ -35,7 +35,15 @@ public class GamePanel extends JPanel {
         this.setSize(game_date.getWidth(), game_date.getHeight());
         this.setDoubleBuffered(true);
     }
-
+    
+    public void zoom(int delta){
+        if (delta < 0 && zoom_level > 2) {
+            zoom_level--;
+        } else if (zoom_level < 12 && delta > 0 ) {
+            zoom_level++;
+        }
+    }
+    
     @Override
     public void paint(Graphics g) {
         long start_time = System.currentTimeMillis();
@@ -55,7 +63,8 @@ public class GamePanel extends JPanel {
         int tile_draw_size = Math.max(this.getHeight(), this.getWidth()) / zoom_level;
 
         delta_width = (int) ((Math.floor(game_date.world.getPlayer_location().getX()) - game_date.world.getPlayer_location().getX()) * (tile_draw_size * 1.0));
-
+        delta_height = (int) ((Math.floor(game_date.world.getPlayer_location().getY()) - game_date.world.getPlayer_location().getY()) * (tile_draw_size * 1.0));
+        
         //System.out.println(delta_width);
         for (int y = -1; y < zoom_level + 2; y++) {
             for (int x = -1; x < zoom_level + 2; x++) {
