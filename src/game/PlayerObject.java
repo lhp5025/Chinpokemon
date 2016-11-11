@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  */
 public class PlayerObject {
     
-    protected ImageIcon player_image = new ImageIcon(Class.class.getResource("/rsc/Ash_BW_788.png"));
+    protected ImageIcon player_image = new ImageIcon(Class.class.getResource("/rsc/player_1.png"));
     public String type;
     
     

@@ -27,7 +27,7 @@ public class GamePanel extends JPanel {
     private int delta_height = 0;
 
     public long render_time = 0;
-    public int zoom_level = 5; //# of blocks displayed in the max direction
+    public int zoom_level = 6; //# of blocks displayed in the max direction
 
     public GamePanel(GameObject _data_source) {
         game_date = _data_source;
@@ -35,15 +35,15 @@ public class GamePanel extends JPanel {
         this.setSize(game_date.getWidth(), game_date.getHeight());
         this.setDoubleBuffered(true);
     }
-    
-    public void zoom(int delta){
+
+    public void zoom(int delta) {
         if (delta < 0 && zoom_level > 2) {
-            zoom_level--;
-        } else if (zoom_level < 12 && delta > 0 ) {
-            zoom_level++;
+            zoom_level -= 2;
+        } else if (zoom_level < 24 && delta > 0) {
+            zoom_level += 2;
         }
     }
-    
+
     @Override
     public void paint(Graphics g) {
         long start_time = System.currentTimeMillis();
@@ -60,22 +60,35 @@ public class GamePanel extends JPanel {
 
         WorldTile[][] zone_tiles = game_date.world.getCurrent_zone().getZone_tiles();
 
-        int tile_draw_size = Math.max(this.getHeight(), this.getWidth()) / zoom_level;
+        //int tile_draw_size = Math.max(this.getHeight(), this.getWidth()) / zoom_level;
+        int tile_draw_size = this.getWidth() / zoom_level;
 
         delta_width = (int) ((Math.floor(game_date.world.getPlayer_location().getX()) - game_date.world.getPlayer_location().getX()) * (tile_draw_size * 1.0));
         delta_height = (int) ((Math.floor(game_date.world.getPlayer_location().getY()) - game_date.world.getPlayer_location().getY()) * (tile_draw_size * 1.0));
-        
+        int offset_x = zoom_level / 2 * tile_draw_size;
+        int offset_y = zoom_level / 2 * tile_draw_size * this.getHeight() / this.getWidth();// bc tile count is width dep
         //System.out.println(delta_width);
-        for (int y = -1; y < zoom_level + 2; y++) {
-            for (int x = -1; x < zoom_level + 2; x++) {
+        for (int y = zoom_level / -2 - 1; y <= zoom_level / 2 + 1; y++) {
+            for (int x = zoom_level / -2 - 1; x <= zoom_level / 2 + 1; x++) {
                 try {
                     g2.drawImage(zone_tiles[x + (int) game_date.world.getPlayer_location().getX()][y + (int) game_date.world.getPlayer_location().getY()].getBg_image(),
-                            x * tile_draw_size + delta_width, y * tile_draw_size + delta_height, tile_draw_size, tile_draw_size, null);
+                            x * tile_draw_size + delta_width + offset_x, y * tile_draw_size + delta_height + offset_y,
+                            tile_draw_size,
+                            tile_draw_size,
+                            null);
                 } catch (Exception e) {
                 }
             }
         }
-
+        
+        // Draw Player
+        Image player_image = game_date.getPlayer().getPlayer_image().getImage();
+        g2.drawImage(player_image,
+                offset_x - tile_draw_size / 2, offset_y - tile_draw_size ,
+                tile_draw_size,
+                tile_draw_size,
+                null);
+        
         render_time = System.currentTimeMillis() - start_time;
     }
 

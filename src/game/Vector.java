@@ -71,6 +71,11 @@ public class Vector {
         return this; // since it is a zero vector
     }
     
+    @Override
+    public String toString() {
+        return "<" +this.x + ", " + this.y + " >" ;
+    }
+    
     public static boolean compareParralel(Vector _v1, Vector _v2){
         // Compare normals
         return (Math.abs(_v1.normalize().getX()) == Math.abs(_v2.normalize().getX())) && (Math.abs(_v1.normalize().getY()) == Math.abs(_v2.normalize().getY()));

@@ -37,13 +37,17 @@ public class GameObject extends JFrame implements Runnable {
     private final GamePanel game_render_panel;
     private final JLabel _rnder_time_text = new JLabel();
     private Vector player_movement_input_vector = new Vector(0.0, 0.0);
-    
+    private PlayerObject player_1 = new PlayerObject();
     
     public final World world = new World(this);
     public Thread game_thread;
 
     public long getDelta_time() {
         return delta_time;
+    }
+    
+    public PlayerObject getPlayer() {
+        return player_1;
     }
 
     public GameObject() {
