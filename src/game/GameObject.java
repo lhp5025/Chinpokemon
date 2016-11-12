@@ -6,21 +6,12 @@
 package game;
 
 import gui.*;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -35,6 +26,7 @@ public class GameObject extends JFrame implements Runnable {
     private long delta_time;// Time between each compute frame
     private final JLayeredPane game_panels;
     private final GamePanel game_render_panel;
+    private final InventoryPanel game_inventory_panel;
     private final JLabel _rnder_time_text = new JLabel();
     private Vector player_movement_input_vector = new Vector(0.0, 0.0);
     private PlayerObject player_1 = new PlayerObject();
@@ -62,8 +54,13 @@ public class GameObject extends JFrame implements Runnable {
         
         game_render_panel = new GamePanel(this);
         game_panels.add(game_render_panel, new Integer(1));
+        
+        
+        game_inventory_panel = new InventoryPanel(this);
+        game_panels.add(game_inventory_panel, new Integer(2));
+        
+        
         this.add(game_panels);
-        //!! Tempt delta time text
         _rnder_time_text.setBounds(0, 0, 800, 30);
         game_panels.add(_rnder_time_text, new Integer(10));
         //!!
@@ -80,7 +77,7 @@ public class GameObject extends JFrame implements Runnable {
         while (true) {
             start_time = System.currentTimeMillis();
             //// Loop functionality
-            _rnder_time_text.setText("DeltaTime(ms): " + String.valueOf(this.getDelta_time()) + "RenderTime(ms): " + String.valueOf(game_render_panel.render_time) + " PlayerLocation:" + world.getPlayer_location() );
+            _rnder_time_text.setText("DeltaTime(ms):" + String.valueOf(this.getDelta_time()) + " RenderTime(ms):" + String.valueOf(game_render_panel.render_time) );
             
             world.movePlayer( player_movement_input_vector );
             
@@ -114,7 +111,13 @@ public class GameObject extends JFrame implements Runnable {
 
         @Override
         public void keyTyped(KeyEvent ke) {
-            //System.out.println(ke + "KEY TYPED: ");
+            //System.out.println("KEY TYPED: " + ke );
+            
+            // alt+z -> Enable/Dissable Runtime info
+            if (ke.getKeyChar() == 'z' && ke.getModifiers() == 8){
+                _rnder_time_text.setVisible( !_rnder_time_text.isVisible() );
+            }
+            
         }
 
         @Override
@@ -130,6 +133,10 @@ public class GameObject extends JFrame implements Runnable {
             
             if (ke.getKeyChar() == 's'){
                 player_movement_input_vector.setY(1);
+            }
+            
+            if (ke.getKeyChar() == 'd'){
+               player_movement_input_vector.setX(1);
             }
             
             if (ke.getKeyChar() == 'd'){

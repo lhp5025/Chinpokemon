@@ -20,12 +20,16 @@ import world.*;
  * @author LHP5025
  */
 public class GamePanel extends JPanel {
-
+    
     private final GameObject game_date;
     private final Image background_image = new ImageIcon(Class.class.getResource("/rsc/world_bg_1.png")).getImage();
     private int delta_width = 0;
     private int delta_height = 0;
-
+    private final RenderingHints render_hints;
+    private Graphics2D g2;
+    private WorldTile[][] zone_tiles;
+    private Image player_image;
+    
     public long render_time = 0;
     public int zoom_level = 6; //# of blocks displayed in the max direction
 
@@ -34,8 +38,13 @@ public class GamePanel extends JPanel {
         this.setVisible(true);
         this.setSize(game_date.getWidth(), game_date.getHeight());
         this.setDoubleBuffered(true);
+        
+        player_image = game_date.getPlayer().getPlayer_image().getImage();
+        
+        render_hints = new RenderingHints(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR );
+        render_hints.add(new RenderingHints( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY ));
     }
-
+    
     public void zoom(int delta) {
         if (delta < 0 && zoom_level > 2) {
             zoom_level -= 2;
@@ -43,31 +52,27 @@ public class GamePanel extends JPanel {
             zoom_level += 2;
         }
     }
-
+    
     @Override
     public void paint(Graphics g) {
         long start_time = System.currentTimeMillis();
-
+        super.paint(g);
         this.setSize(game_date.getWidth(), game_date.getHeight());
-        Graphics2D g2 = (Graphics2D) g;
-
-        RenderingHints rh = new RenderingHints(
-                RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-        g2.setRenderingHints(rh);
-
-        g2.drawImage(background_image, 0, 0, game_date.getWidth(), game_date.getHeight(), this); // Draw background image first
-
-        WorldTile[][] zone_tiles = game_date.world.getCurrent_zone().getZone_tiles();
+        g2 = (Graphics2D) g;
+        g2.setRenderingHints(render_hints);
+        
+        g2.drawImage(background_image, 0, 0, game_date.getWidth(),
+                game_date.getHeight(), this); // Draw background image first
+        
+        zone_tiles = game_date.world.getCurrent_zone().getZone_tiles();
 
         //int tile_draw_size = Math.max(this.getHeight(), this.getWidth()) / zoom_level;
         int tile_draw_size = this.getWidth() / zoom_level;
-
         delta_width = (int) ((Math.floor(game_date.world.getPlayer_location().getX()) - game_date.world.getPlayer_location().getX()) * (tile_draw_size * 1.0));
         delta_height = (int) ((Math.floor(game_date.world.getPlayer_location().getY()) - game_date.world.getPlayer_location().getY()) * (tile_draw_size * 1.0));
         int offset_x = zoom_level / 2 * tile_draw_size;
         int offset_y = zoom_level / 2 * tile_draw_size * this.getHeight() / this.getWidth();// bc tile count is width dep
-        //System.out.println(delta_width);
+        
         for (int y = zoom_level / -2 - 1; y <= zoom_level / 2 + 1; y++) {
             for (int x = zoom_level / -2 - 1; x <= zoom_level / 2 + 1; x++) {
                 try {
@@ -80,16 +85,15 @@ public class GamePanel extends JPanel {
                 }
             }
         }
-        
+
         // Draw Player
-        Image player_image = game_date.getPlayer().getPlayer_image().getImage();
         g2.drawImage(player_image,
-                offset_x - tile_draw_size / 2, offset_y - tile_draw_size ,
+                offset_x - tile_draw_size / 2, offset_y - tile_draw_size,
                 tile_draw_size,
                 tile_draw_size,
                 null);
         
         render_time = System.currentTimeMillis() - start_time;
     }
-
+    
 }
