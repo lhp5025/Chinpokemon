@@ -23,6 +23,7 @@ public class GamePanel extends JPanel {
     
     private final GameObject game_date;
     private final Image background_image = new ImageIcon(Class.class.getResource("/rsc/world_bg_1.png")).getImage();
+    private final Image overflow_image = new ImageIcon(Class.class.getResource("/rsc/shrub_basic.png")).getImage();
     private int delta_width = 0;
     private int delta_height = 0;
     private final RenderingHints render_hints;
@@ -82,6 +83,11 @@ public class GamePanel extends JPanel {
                             tile_draw_size,
                             null);
                 } catch (Exception e) {
+                    g2.drawImage(overflow_image,
+                            x * tile_draw_size + delta_width + offset_x, y * tile_draw_size + delta_height + offset_y,
+                            tile_draw_size,
+                            tile_draw_size,
+                            null);
                 }
             }
         }
@@ -92,6 +98,8 @@ public class GamePanel extends JPanel {
                 tile_draw_size,
                 tile_draw_size,
                 null);
+        
+        
         
         render_time = System.currentTimeMillis() - start_time;
     }

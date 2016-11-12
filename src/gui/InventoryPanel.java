@@ -20,14 +20,14 @@ public class InventoryPanel extends JPanel {
     public InventoryPanel(GameObject _data_source) {
         game_data = _data_source;
         this.setVisible(true);
-        this.setBounds(50, 50, game_data.getWidth() - 100, game_data.getHeight() - 100);
+        this.setBounds(50, 50, 630, 480);
         
     }
     
     @Override
     public void paint(Graphics g){
         super.paint(g);
-        this.setBounds(50, 50, game_data.getWidth() - 100, game_data.getHeight() - 150);
+        this.setBounds(50, 50, 630, 480);
     }
     
 }

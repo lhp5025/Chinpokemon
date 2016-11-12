@@ -19,6 +19,8 @@ public class Main {
         System.setProperty("sun.java2d.opengl","True");
         
         GameObject g = new GameObject();
+        
+        
     }
     
 }
