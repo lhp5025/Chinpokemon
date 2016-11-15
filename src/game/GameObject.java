@@ -7,6 +7,7 @@ package game;
 
 import gui.*;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseWheelEvent;
@@ -27,13 +28,13 @@ public class GameObject extends JFrame implements Runnable {
     private long delta_time;// Time between each compute frame
     private final JLayeredPane game_panels;
     private final GamePanel game_render_panel;
-    private final InventoryPanel game_inventory_panel;
+    private final Inventory_Panel game_inventory_panel;
     private final JLabel _rnder_time_text = new JLabel();
     private Vector player_movement_input_vector = new Vector(0.0, 0.0);
-    private PlayerObject player_1 = new PlayerObject();
     private int target_delta_time = 10;
     
     public final World world = new World(this);
+    public final PlayerObject player_1 = new PlayerObject();
     public Thread game_thread;
 
     public long getDelta_time() {
@@ -50,6 +51,7 @@ public class GameObject extends JFrame implements Runnable {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.addKeyListener( new KeyBindings() );
         this.addMouseWheelListener( new MouseBindings() );
+        this.setMinimumSize(new Dimension(800,600));
         
         game_panels = new JLayeredPane();
         game_panels.setDoubleBuffered(true);
@@ -58,7 +60,7 @@ public class GameObject extends JFrame implements Runnable {
         game_panels.add(game_render_panel, new Integer(1));
         
         
-        game_inventory_panel = new InventoryPanel(this);
+        game_inventory_panel = new Inventory_Panel(this);
         game_panels.add(game_inventory_panel, new Integer(2));
         
         _rnder_time_text.setBounds(0, 0, 800, 30);
