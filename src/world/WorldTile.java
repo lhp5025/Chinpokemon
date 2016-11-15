@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 public abstract class WorldTile {
     protected ImageIcon bg_image = null;
     protected ImageIcon fg_image = null;
-    protected String name = null;
+    protected String name = "";
     public final String type;
     
     public Image getBg_image() {
@@ -44,5 +44,10 @@ public abstract class WorldTile {
     public WorldTile(ImageIcon _bg_image, String _type){
         bg_image = _bg_image;
         type = _type;
+    }
+    
+    @Override
+    public String toString() {
+        return type + ":" + name;
     }
 }

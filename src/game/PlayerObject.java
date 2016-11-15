@@ -14,17 +14,11 @@ import javax.swing.ImageIcon;
 public class PlayerObject {
     
     protected ImageIcon player_image = new ImageIcon(Class.class.getResource("/rsc/player_1.png"));
-    public String type;
+    
+    public final InventoryObject inventory = new InventoryObject();
+    public final String name = "Animu";
     
     
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public ImageIcon getPlayer_image() {
         return player_image;
     }

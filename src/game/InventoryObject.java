@@ -5,12 +5,17 @@
  */
 package game;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author CXM818
  */
 public class InventoryObject {
     
+    private ArrayList<ItemObject> items = new ArrayList<>();
     
-    
+    public ArrayList<ItemObject> getItems() {
+        return this.items;
+    }
 }

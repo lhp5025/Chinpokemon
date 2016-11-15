@@ -19,6 +19,8 @@ public class Inventory_Panel extends javax.swing.JPanel {
         this.setVisible(true);
         this.setBounds(50, 50, 600, 500);
         initComponents();
+        //
+        inventoryList.setListData(game_data.player_1.inventory.getItems().toArray());
         
     }
 

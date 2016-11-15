@@ -19,6 +19,10 @@ public class WallTile extends WorldTile {
     public WallTile(ImageIcon _bg_image, ImageIcon _fg_image) {
         super(_bg_image, _fg_image,"WALL");
     }
+    public WallTile(ImageIcon _bg_image, String _name) {
+        super(_bg_image, "WALL");
+        this.name = _name;
+    }
     public WallTile(ImageIcon _bg_image) {
         super(_bg_image, "WALL");
     }

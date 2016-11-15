@@ -19,6 +19,10 @@ public class FloorTile extends WorldTile {
     public FloorTile(ImageIcon _bg_image, ImageIcon _fg_image) {
         super(_bg_image, _fg_image,"FLOOR");
     }
+    public FloorTile(ImageIcon _bg_image, String _name) {
+        super(_bg_image, "FLOOR");
+        this.name = _name;
+    }
     public FloorTile(ImageIcon _bg_image) {
         super(_bg_image, "FLOOR");
     }
