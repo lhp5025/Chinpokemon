@@ -1,5 +1,8 @@
 package builder;
 
+import java.awt.Dimension;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import world.WorldTile;
 import world.Zone;
 
@@ -10,32 +13,45 @@ import world.Zone;
 public class WorldBuilderGui extends javax.swing.JFrame {
 
     private WorldTile chosenTile;
-    
-    private int world_size_x = 32;
-    private int world_size_y = 32;
-    
+
+    private int world_size_x = 128;
+    private int world_size_y = 128;
+
     WorldTile[][] worldArray = new WorldTile[world_size_x][world_size_y];
-    
+
     /**
      * Creates new form WorldBuilderGui
      */
     public WorldBuilderGui() {
         initComponents();
-        WorldBuilderPanel worldBuilderPanel = new WorldBuilderPanel(worldArray);
-        jPanel1.add(worldBuilderPanel);
-        
         String[] stringList = {"grass", "wall"};
-        for(int i = 0; i < world_size_x; i++)
-            for(int j = 0; j < world_size_y; j++ )
-            {
-                if(i == 0 || j == 0 || i == world_size_x-1 || j == world_size_y) {
+
+        for (int i = 0; i < world_size_x; i++) {
+            for (int j = 0; j < world_size_y; j++) {
+                if (i == 0 || j == 0 || i == world_size_x - 1 || j == world_size_y) {
                     worldArray[i][j] = Zone.wall_basic_1;
-                }
-                else {
+                } else {
                     worldArray[i][j] = Zone.grass_1;
                 }
-                
+
             }
+        }
+
+        WorldBuilderPanel worldBuilderPanel = new WorldBuilderPanel(worldArray);
+        
+        jScrollPane2.setViewportView(worldBuilderPanel);
+        jScrollPane2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        //worldBuilderPanel.setViewportView(jPanel1);
+        //worldBuilderPanel.setWheelScrollingEnabled(true);
+        
+        //worldBuilderPanel.setMinimumSize(new Dimension(160, 200));
+        //worldBuilderPanel.setPreferredSize(new Dimension(160, 200));
+        //worldBuilderPanel.setSize(new Dimension(this.getWidth(), this.getHeight()));
+        //worldBuilderPanel.setViewportView(jPanel1);
+        //jScrollPane2 = worldBuilderPanel;this.repaint();
+        //this.add(worldBuilderPanel);
     }
 
     /**
@@ -49,8 +65,8 @@ public class WorldBuilderGui extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,14 +86,12 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 339, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 285, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
-
-        jScrollPane2.setViewportView(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,15 +101,15 @@ public class WorldBuilderGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -104,10 +118,11 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        if (jList1.getSelectedIndex() == 0)
-                chosenTile = Zone.grass_1;
-        else
+        if (jList1.getSelectedIndex() == 0) {
+            chosenTile = Zone.grass_1;
+        } else {
             chosenTile = Zone.wall_basic_1;
+        }
         System.out.println(chosenTile);
     }//GEN-LAST:event_jList1ValueChanged
 
@@ -144,7 +159,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
                 new WorldBuilderGui().setVisible(true);
             }
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
