@@ -60,6 +60,7 @@ public class GamePanel extends JPanel {
         super.paint(g);
         this.setSize(game_date.getWidth(), game_date.getHeight());
         g2 = (Graphics2D) g;
+        
         g2.setRenderingHints(render_hints);
         
         g2.drawImage(background_image, 0, 0, game_date.getWidth(),
@@ -100,7 +101,7 @@ public class GamePanel extends JPanel {
                 null);
         
         
-        
+        g2.dispose();
         render_time = System.currentTimeMillis() - start_time;
     }
     

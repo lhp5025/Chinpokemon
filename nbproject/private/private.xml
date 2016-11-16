@@ -3,9 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/P:/Private/GitHub/Chinpokemon/src/gui/GamePanel.java</file>
-            <file>file:/P:/Private/GitHub/Chinpokemon/src/game/GameObject.java</file>
-            <file>file:/P:/Private/GitHub/Chinpokemon/src/gui/Inventory_Panel.java</file>
+            <file>file:/D:/Repositories/Chinpokemon/src/game/PlayerObject.java</file>
+            <file>file:/D:/Repositories/Chinpokemon/src/game/ItemObject.java</file>
         </group>
     </open-files>
 </project-private>

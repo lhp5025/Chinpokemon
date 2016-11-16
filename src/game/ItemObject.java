@@ -11,4 +11,14 @@ package game;
  */
 public abstract class ItemObject{
     
+    
+    
+    public final String name;
+    
+    public abstract void use();
+    
+    public ItemObject (String _name) {
+        this.name = _name;
+    }
+    
 }

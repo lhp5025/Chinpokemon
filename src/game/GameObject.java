@@ -31,7 +31,8 @@ public class GameObject extends JFrame implements Runnable {
     private final Inventory_Panel game_inventory_panel;
     private final JLabel _rnder_time_text = new JLabel();
     private Vector player_movement_input_vector = new Vector(0.0, 0.0);
-    private int target_delta_time = 10;
+    private int target_delta_time = 15;
+    private boolean IS_RUNNING = true;
     
     public final World world = new World(this);
     public final PlayerObject player_1 = new PlayerObject();
@@ -82,7 +83,7 @@ public class GameObject extends JFrame implements Runnable {
     public synchronized void run() {
         // Game Loop
         long start_time;// Loop timer
-        while (true) {
+        while (IS_RUNNING) {
             start_time = System.currentTimeMillis();
             //// Loop functionality
             _rnder_time_text.setText("FPS:" + String.format("%1.0f", 1000.0 / (1.0* this.getDelta_time() ))+" (" +this.delta_time +")" + " Render_T(ms):" + String.valueOf(game_render_panel.render_time) );
@@ -105,6 +106,12 @@ public class GameObject extends JFrame implements Runnable {
             delta_time = System.currentTimeMillis() - start_time;// Time it took to compute loop
         }
 
+    }
+    
+    @Override
+    public void dispose(){
+        IS_RUNNING = false;
+        super.dispose();
     }
     
     public class MouseBindings implements MouseWheelListener {
