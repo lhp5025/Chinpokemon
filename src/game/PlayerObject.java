@@ -5,6 +5,7 @@
  */
 package game;
 
+import game.chinpokemon.*;
 import javax.swing.ImageIcon;
 
 /**
@@ -13,11 +14,12 @@ import javax.swing.ImageIcon;
  */
 public class PlayerObject {
     
-    protected ImageIcon player_image = new ImageIcon(Class.class.getResource("/rsc/player_1.png"));
+    private ImageIcon player_image = new ImageIcon(Class.class.getResource("/rsc/player_1.png"));
     
     public final InventoryObject inventory = new InventoryObject();
     public final String name = "Animu";
     
+    private long credits = 10;
     
     public ImageIcon getPlayer_image() {
         return player_image;
@@ -26,6 +28,14 @@ public class PlayerObject {
     public void setPlayer_image(ImageIcon player_image) {
         this.player_image = player_image;
     }
-
+    
+    public long getCredits() {
+        return this.credits;
+    }
+    
+    public PlayerObject() {
+        inventory.add(new ChinpokeSlurry());
+        inventory.add(new Shoe() );
+    }
     
 }

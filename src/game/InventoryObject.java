@@ -14,8 +14,20 @@ import java.util.ArrayList;
 public class InventoryObject {
     
     private ArrayList<ItemObject> items = new ArrayList<>();
+    private ArrayList<ChinpokemonObject> chinpokemons = new ArrayList<>();
+    
+    public void add(ItemObject _obj){
+        items.add(_obj);
+    }
+    
+    public void add(ChinpokemonObject _obj){
+        chinpokemons.add(_obj);
+    }
     
     public ArrayList<ItemObject> getItems() {
         return this.items;
+    }
+    public ArrayList<ChinpokemonObject> getChinpokemon() {
+        return this.chinpokemons;
     }
 }

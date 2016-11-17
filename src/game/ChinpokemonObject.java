@@ -5,7 +5,7 @@
  */
 package game;
 
-import javax.swing.ImageIcon;
+import java.awt.Image;
 
 /**
  *
@@ -14,32 +14,37 @@ import javax.swing.ImageIcon;
 public abstract class ChinpokemonObject {
 
     //name, img, abillity array, 
-    protected final ImageIcon defualt_pos_img = null;
-    public String name;
+    private final Image defualt_pos_img;
+    private String name;
+    private final String species;
     private double maxHealth;
     private double currentHealth;
     private int power;
 
     
-    
-    
-    
-    public double getDamage(double n) {
-        
-        return 0;
+    public ChinpokemonObject(String _species, String name, Image _img) {
+        this.species = _species;
+        this.name = name;
+        this.defualt_pos_img = _img;
+        this.power = 1;
+        this.maxHealth = this.currentHealth = 10;
     }
-
-    public double heal(double n) {
-
-        return 0;
+    
+    
+    public void heal(double n) {
+        if (n + currentHealth > maxHealth) {
+            currentHealth = maxHealth;
+        } else {
+            currentHealth += n;
+        }
     }
 
     private void evolve() {
 
     }
 
-    public void powerUp() {
-
+    public void feed() {
+        
     }
 
     public String getName() {
@@ -54,24 +59,20 @@ public abstract class ChinpokemonObject {
         return maxHealth;
     }
 
-    public void setMaxHealth(double maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
     public double getCurrentHealth() {
         return currentHealth;
     }
-
-    public void setCurrentHealth(double currentHealth) {
-        this.currentHealth = currentHealth;
-    }
-
+    
     public int getPower() {
         return power;
     }
-
-    public void setPower(int power) {
-        this.power = power;
+    
+    public Image getImageDefault() {
+        return this.defualt_pos_img;
     }
-
+    
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

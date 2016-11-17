@@ -29,7 +29,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         for (int i = 0; i < world_size_x; i++) {
             for (int j = 0; j < world_size_y; j++) {
                 if (i == 0 || j == 0 || i == world_size_x - 1 || j == world_size_y) {
-                    worldArray[i][j] = Zone.wall_basic_1;
+                    worldArray[i][j] = Zone.wall_basic;
                 } else {
                     worldArray[i][j] = Zone.grass_1;
                 }
@@ -121,7 +121,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         if (jList1.getSelectedIndex() == 0) {
             chosenTile = Zone.grass_1;
         } else {
-            chosenTile = Zone.wall_basic_1;
+            chosenTile = Zone.wall_basic;
         }
         System.out.println(chosenTile);
     }//GEN-LAST:event_jList1ValueChanged
