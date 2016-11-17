@@ -15,13 +15,13 @@ import java.awt.Graphics;
  * @author LHP5025
  */
 public class Inventory_Panel extends javax.swing.JPanel {
-    
+
     @Override
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
         super.paint(g);
-        playerCredits.setText("Credits: " + game_data.player_1.getCredits() );
+        playerCredits.setText("Credits: " + game_data.player_1.getCredits());
     }
-    
+
     private final GameObject game_data;
 
     public Inventory_Panel(GameObject _data_source) {
@@ -30,6 +30,7 @@ public class Inventory_Panel extends javax.swing.JPanel {
         this.setBounds(50, 50, 600, 500);
         initComponents();
         //
+        chinpokemonInput.setVisible(false); //! 
         inventoryList.setListData(game_data.player_1.inventory.getItems().toArray());
         chinpokemonList.setListData(game_data.player_1.inventory.getChinpokemon().toArray());
     }
@@ -54,7 +55,8 @@ public class Inventory_Panel extends javax.swing.JPanel {
         chinpokemonList = new javax.swing.JList();
         chinpokemonRenderButton = new javax.swing.JButton();
         feedButton = new javax.swing.JButton();
-        feedButton1 = new javax.swing.JButton();
+        renameButton = new javax.swing.JButton();
+        chinpokemonInput = new javax.swing.JTextField();
         inventoryPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         inventoryList = new javax.swing.JList();
@@ -140,8 +142,13 @@ public class Inventory_Panel extends javax.swing.JPanel {
         feedButton.setText("Feed");
         feedButton.setFocusable(false);
 
-        feedButton1.setText("Rename");
-        feedButton1.setFocusable(false);
+        renameButton.setText("Rename");
+        renameButton.setFocusable(false);
+        renameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renameButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout chinpokemonPanelLayout = new javax.swing.GroupLayout(chinpokemonPanel);
         chinpokemonPanel.setLayout(chinpokemonPanelLayout);
@@ -154,7 +161,8 @@ public class Inventory_Panel extends javax.swing.JPanel {
                 .addGroup(chinpokemonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chinpokemonRenderButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(feedButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(feedButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(renameButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chinpokemonInput, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         chinpokemonPanelLayout.setVerticalGroup(
@@ -165,8 +173,10 @@ public class Inventory_Panel extends javax.swing.JPanel {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
                     .addGroup(chinpokemonPanelLayout.createSequentialGroup()
                         .addComponent(feedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(feedButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(renameButton)
+                        .addGap(1, 1, 1)
+                        .addComponent(chinpokemonInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(chinpokemonRenderButton)))
                 .addContainerGap())
@@ -270,7 +280,7 @@ public class Inventory_Panel extends javax.swing.JPanel {
 
     private void itemDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDeleteButtonActionPerformed
         if (inventoryList.getSelectedIndex() != -1) {
-            outputText.setText("[" +  inventoryList.getSelectedValue() + " deleted]");
+            outputText.setText("[" + inventoryList.getSelectedValue() + " deleted]");
             imageOutPanel.setImage(null);
             game_data.player_1.inventory.getItems().remove(inventoryList.getSelectedIndex());
             inventoryList.setListData(game_data.player_1.inventory.getItems().toArray());
@@ -285,7 +295,11 @@ public class Inventory_Panel extends javax.swing.JPanel {
 
     private void chinpokemonListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chinpokemonListMouseClicked
         if (chinpokemonList.getSelectedIndex() != -1) {
-            outputText.setText(((ChinpokemonObject) chinpokemonList.getSelectedValue()).toString());
+            outputText.setText(
+                    "Species: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).species
+                    + "\nPower: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getPower()
+                    + "\nMax Health: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getMaxHealth()
+                    + "\nHealth: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getCurrentHealth());
             imageOutPanel.setImage(((ChinpokemonObject) chinpokemonList.getSelectedValue()).getImageDefault());
         }
     }//GEN-LAST:event_chinpokemonListMouseClicked
@@ -293,15 +307,41 @@ public class Inventory_Panel extends javax.swing.JPanel {
     private void tabPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPaneStateChanged
         outputText.setText("");
         imageOutPanel.setImage(null);
+        inventoryList.setListData(game_data.player_1.inventory.getItems().toArray());
+        chinpokemonList.setListData(game_data.player_1.inventory.getChinpokemon().toArray());
     }//GEN-LAST:event_tabPaneStateChanged
+
+    private void renameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameButtonActionPerformed
+        String input = chinpokemonInput.getText();
+        if (chinpokemonList.getSelectedIndex() != -1) {
+            if (chinpokemonInput.isVisible()) {
+                if (input.length() > 1 && input != "  ") {
+                    game_data.player_1.inventory.renameChinpokemon(chinpokemonList.getSelectedIndex(), input);
+                    chinpokemonInput.setText("");
+                    game_data.requestFocus();
+                    chinpokemonInput.setVisible(false);
+                    renameButton.setText("Rename");
+                } else {
+                    renameButton.setText("Rename");
+                    game_data.requestFocus();
+                    chinpokemonInput.setVisible(false);
+                }
+            } else {
+                renameButton.setText("Enter");
+                chinpokemonInput.setVisible(true);
+            }
+
+        }
+
+    }//GEN-LAST:event_renameButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField chinpokemonInput;
     private javax.swing.JList chinpokemonList;
     private javax.swing.JPanel chinpokemonPanel;
     private javax.swing.JButton chinpokemonRenderButton;
     private javax.swing.JButton feedButton;
-    private javax.swing.JButton feedButton1;
     private gui.ImagePanel imageOutPanel;
     private javax.swing.JList inventoryList;
     private javax.swing.JPanel inventoryPanel;
@@ -313,6 +353,7 @@ public class Inventory_Panel extends javax.swing.JPanel {
     private javax.swing.JPanel optPanel;
     private javax.swing.JTextPane outputText;
     private javax.swing.JLabel playerCredits;
+    private javax.swing.JButton renameButton;
     private javax.swing.JTabbedPane tabPane;
     // End of variables declaration//GEN-END:variables
 }

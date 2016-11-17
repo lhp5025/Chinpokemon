@@ -24,6 +24,10 @@ public class InventoryObject {
         chinpokemons.add(_obj);
     }
     
+    public void renameChinpokemon(int _index, String _name){
+        chinpokemons.get(_index).setName(_name);
+    }
+    
     public ArrayList<ItemObject> getItems() {
         return this.items;
     }
