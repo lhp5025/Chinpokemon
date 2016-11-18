@@ -42,9 +42,7 @@ public abstract class ChinpokemonObject {
 
     }
 
-    public void feed() {
-        
-    }
+    public abstract void feed();
 
     public String getName() {
         return name;

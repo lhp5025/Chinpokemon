@@ -141,6 +141,11 @@ public class Inventory_Panel extends javax.swing.JPanel {
 
         feedButton.setText("Feed");
         feedButton.setFocusable(false);
+        feedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                feedButtonActionPerformed(evt);
+            }
+        });
 
         renameButton.setText("Rename");
         renameButton.setFocusable(false);
@@ -289,8 +294,14 @@ public class Inventory_Panel extends javax.swing.JPanel {
     }//GEN-LAST:event_itemDeleteButtonActionPerformed
 
     private void chinpokemonRenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chinpokemonRenderButtonActionPerformed
-        // TODO add your handling code here:
-        chinpokemonList.setListData(game_data.player_1.inventory.getChinpokemon().toArray());
+        if (chinpokemonList.getSelectedIndex() != -1) {
+            if ( game_data.player_1.inventory.renderChinpokemon(( (ChinpokemonObject) chinpokemonList.getSelectedValue() ) ) ){
+                outputText.setText("[Render Success]");
+            } else {
+                outputText.setText("[Error]");
+            }
+            chinpokemonList.setListData(game_data.player_1.inventory.getChinpokemon().toArray());
+        }
     }//GEN-LAST:event_chinpokemonRenderButtonActionPerformed
 
     private void chinpokemonListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chinpokemonListMouseClicked
@@ -334,6 +345,20 @@ public class Inventory_Panel extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_renameButtonActionPerformed
+
+    private void feedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feedButtonActionPerformed
+        if (chinpokemonList.getSelectedIndex() != -1) {
+            if ( game_data.player_1.inventory.feedChinpokemon( ( (ChinpokemonObject) chinpokemonList.getSelectedValue() ) ) ){
+                outputText.setText(
+                    "Species: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).species
+                    + "\nPower: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getPower()
+                    + "\nMax Health: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getMaxHealth()
+                    + "\nHealth: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getCurrentHealth());
+            } else {
+                outputText.setText("No Slurry!");
+            }
+        }
+    }//GEN-LAST:event_feedButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -27,5 +27,11 @@ public class Shoe extends ChinpokemonObject {
     public Shoe() {
         super("Shoe", "Shoe", new ImageIcon(Class.class.getResource("/rsc/shoe.png")).getImage());
     }
+
+    @Override
+    public void feed() {
+        this.power++;
+        this.maxHealth += this.power * 5; 
+    }
     
 }

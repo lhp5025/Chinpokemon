@@ -24,6 +24,28 @@ public class InventoryObject {
         chinpokemons.add(_obj);
     }
     
+    public boolean feedChinpokemon(ChinpokemonObject _chpkmn){
+        for (ItemObject _obj : items){
+            if (_obj.name == "Chinpoke-Slurry") {
+                items.remove(_obj);
+                _chpkmn.feed();
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean renderChinpokemon(ChinpokemonObject _chpkmn){
+        if (chinpokemons.contains(_chpkmn)) {
+            chinpokemons.remove(_chpkmn);
+            items.add(new ChinpokeSlurry());
+            return true;
+        }
+        
+        return false;
+    }
+    
     public void renameChinpokemon(int _index, String _name){
         chinpokemons.get(_index).setName(_name);
     }
