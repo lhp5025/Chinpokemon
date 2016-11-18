@@ -12,11 +12,11 @@ import world.Zone;
  */
 public class WorldBuilderGui extends javax.swing.JFrame {
 
-    private WorldTile chosenTile;
+    public WorldTile chosenTile;
 
     private int world_size_x = 128;
     private int world_size_y = 128;
-
+    
     WorldTile[][] worldArray = new WorldTile[world_size_x][world_size_y];
 
     /**
@@ -24,6 +24,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
      */
     public WorldBuilderGui() {
         initComponents();
+        
         String[] stringList = {"grass", "wall"};
 
         for (int i = 0; i < world_size_x; i++) {

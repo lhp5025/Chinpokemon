@@ -24,7 +24,7 @@ import world.WorldTile;
  */
 public class WorldBuilderPanel extends JPanel{
     
-    private Image background_image;
+    private WorldTile chosenTile;
     private WorldTile[][] worldArray;
     private int BLOCK_SIZE = 32;
     
@@ -38,6 +38,7 @@ public class WorldBuilderPanel extends JPanel{
         this.setAutoscrolls(true);
         this.setBackground(Color.red);
         this.worldArray = worldArray;
+        
     }
     
     @Override
@@ -63,14 +64,19 @@ public class WorldBuilderPanel extends JPanel{
         @Override
         public void mouseClicked(MouseEvent e) {
             
+            WorldBuilderGui wbg;
+            wbg = (WorldBuilderGui) e.getComponent().getParent().getParent().getParent().getParent().getParent().getParent().getParent();
+            System.out.println(wbg.chosenTile);
             int x = e.getX();
             //System.out.println(x);
             int y = e.getY();
             //System.out.println(y);
-            x = (int) Math.floor(x / 32);
+            x = (int) Math.floor(x / 128);
             //System.out.println(x);
-            y = (int) Math.floor(y / 32);
+            y = (int) Math.floor(y / 128);
             //System.out.println(y);
+            //use the position to calculate the place in the array
+            //place the referenced world builder tile in the array
             parent.repaint();
             
         }
