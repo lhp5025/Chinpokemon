@@ -6,13 +6,14 @@
 package world;
 
 import java.awt.Image;
+import java.io.Serializable;
 import javax.swing.ImageIcon;
 
 /**
  *
  * @author LHP5025
  */
-public abstract class WorldTile {
+public abstract class WorldTile implements Serializable{
     protected ImageIcon bg_image = null;
     protected ImageIcon fg_image = null;
     protected String name = "";
