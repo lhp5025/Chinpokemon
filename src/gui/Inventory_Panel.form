@@ -151,7 +151,8 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="chinpokemonRenderButton" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
                           <Component id="feedButton" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
-                          <Component id="feedButton1" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
+                          <Component id="renameButton" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
+                          <Component id="chinpokemonInput" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -165,8 +166,10 @@
                           <Component id="jScrollPane2" pref="431" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="feedButton" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="feedButton1" min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="renameButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                              <Component id="chinpokemonInput" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="chinpokemonRenderButton" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -218,12 +221,20 @@
                 <Property name="text" type="java.lang.String" value="Feed"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="feedButtonActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="feedButton1">
+            <Component class="javax.swing.JButton" name="renameButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Rename"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="renameButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="chinpokemonInput">
             </Component>
           </SubComponents>
         </Container>

@@ -36,6 +36,7 @@ public class PlayerObject {
     public PlayerObject() {
         inventory.add(new ChinpokeSlurry());
         inventory.add(new Shoe() );
+        inventory.add(new Shoe(10) );
     }
     
 }

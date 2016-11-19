@@ -16,10 +16,10 @@ public abstract class ChinpokemonObject {
     //name, img, abillity array, 
     private final Image defualt_pos_img;
     private String name;
-    private final String species;
-    private double maxHealth;
-    private double currentHealth;
-    private int power;
+    public final String species;
+    protected double maxHealth;
+    protected double currentHealth;
+    protected int power;
 
     
     public ChinpokemonObject(String _species, String name, Image _img) {
@@ -29,7 +29,6 @@ public abstract class ChinpokemonObject {
         this.power = 1;
         this.maxHealth = this.currentHealth = 10;
     }
-    
     
     public void heal(double n) {
         if (n + currentHealth > maxHealth) {
@@ -43,9 +42,7 @@ public abstract class ChinpokemonObject {
 
     }
 
-    public void feed() {
-        
-    }
+    public abstract void feed();
 
     public String getName() {
         return name;
