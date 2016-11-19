@@ -13,3 +13,4 @@ hs_err_pid*
 
 # Ignore these dirs #
 build/
+nbproject/private/
