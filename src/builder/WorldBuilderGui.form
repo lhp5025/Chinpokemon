@@ -3,6 +3,9 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.JFileChooser" name="jFileChooser1">
+      <Properties>
+        <Property name="currentDirectory" type="java.io.File" value="null"/>
+      </Properties>
     </Component>
   </NonVisualComponents>
   <Properties>

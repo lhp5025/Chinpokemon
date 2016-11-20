@@ -27,7 +27,7 @@ public class World {
     private final GameObject game_data;
     private ArrayList<Zone> zones = new ArrayList<>();
     private Zone current_zone;
-    private Vector player_location = new Vector(0.0, 0.0);
+    private Vector player_location = new Vector(2.0, 2.0);
 
     private boolean collisionDetection(double x, double y) {
         return false;
@@ -39,12 +39,31 @@ public class World {
 
         if (magnitude != 0) {
             Point2D normal = new Point.Double(_input.getX() / magnitude, _input.getY() / magnitude);
-            if (player_location.getX() + normal.getX() * movement_speed >= 0.0 && player_location.getY() + normal.getY() * movement_speed >= 0.0) {
+
+            // If collision checks out
+            if (checkCollision(new Vector(player_location.getX() + normal.getX() * movement_speed, player_location.getY() + normal.getY() * movement_speed))) {
                 player_location.incLocation(normal.getX() * movement_speed, normal.getY() * movement_speed);
             }
 
         }
 
+    }
+
+    private boolean checkCollision(Vector _pos) {
+        try {
+            // If the current tile is a floor (i.e. it doesn not enact collision)
+            if (current_zone.getZone_tiles()[(int) Math.floor(_pos.getX())][(int) Math.floor(_pos.getY())].type.equals("FLOOR")) {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        /*if (current_zone.getZone_tiles()[(int) Math.floor(_pos.getX())][(int) Math.floor(_pos.getY())].type == "WALL"
+                && _pos.getX() > 0.0 && _pos.getX() <= current_zone.width
+                && _pos.getY() > 0.0 && _pos.getY() <= current_zone.heihgt) {
+            return false;
+        }*/
+        return false;
     }
 
     public Vector getPlayer_location() {
@@ -55,24 +74,18 @@ public class World {
         return current_zone;
     }
 
-    //!! Temp
-    private final FloorTile grass1 = new FloorTile(new ImageIcon(Class.class.getResource("/rsc/grass_1.png")));
-    private final FloorTile grass2 = new FloorTile(new ImageIcon(Class.class.getResource("/rsc/grass_2.png")));
-    private final FloorTile grass3 = new FloorTile(new ImageIcon(Class.class.getResource("/rsc/grass_3.png")));
-
     //!! 
     public World(GameObject _game_data) {
         game_data = _game_data;
         WorldTile[][] temp_test = new WorldTile[32][32];
         Zone importZone;
         try {
-                ObjectInputStream in = new ObjectInputStream(Class.class.getResourceAsStream("/rsc/testZone.zone"));
-                importZone = (Zone) in.readObject();
-                current_zone = importZone;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            ObjectInputStream in = new ObjectInputStream(Class.class.getResourceAsStream("/rsc/testZone.zone"));
+            importZone = (Zone) in.readObject();
+            current_zone = importZone;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        
     }
 }

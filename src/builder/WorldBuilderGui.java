@@ -50,21 +50,9 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         jScrollPane2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
-        this.addMouseWheelListener(new MouseBindings());
     }
     
-    public class MouseBindings implements MouseWheelListener {
-
-        @Override
-        public void mouseWheelMoved(MouseWheelEvent e) {
-            //System.out.println(e.getWheelRotation() );
-            if (worldBuilderPanel.getBLOCK_SIZE() - e.getWheelRotation() > 1) {
-                worldBuilderPanel.setBLOCK_SIZE(worldBuilderPanel.getBLOCK_SIZE() - e.getWheelRotation());
-            }
-            
-        }
-
-    }
+    
     
     /**
      * Populates the Zone with grass tiles surrounded a layer of wall tiles
@@ -105,6 +93,8 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         xSizeField = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+
+        jFileChooser1.setCurrentDirectory(null);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 750));

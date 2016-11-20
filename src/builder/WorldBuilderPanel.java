@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import world.WorldTile;
@@ -29,7 +31,7 @@ public class WorldBuilderPanel extends JPanel {
         this.setVisible(true);
         this.addMouseListener(new MouseClicky(this));
         this.setAutoscrolls(true);
-        
+        this.addMouseWheelListener(new MouseBindings());
         this.setBackground(Color.red);
         this.worldArray = worldArray;
         render_hints = new RenderingHints(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
@@ -67,6 +69,19 @@ public class WorldBuilderPanel extends JPanel {
         }
     }
 
+    public class MouseBindings implements MouseWheelListener {
+
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent e) {
+            //System.out.println(e.getWheelRotation() );
+            if (getBLOCK_SIZE() - e.getWheelRotation() > 1) {
+                setBLOCK_SIZE(getBLOCK_SIZE() - e.getWheelRotation());
+            }
+            
+        }
+
+    }
+    
     public class MouseClicky implements MouseListener {
 
         public final JComponent parent;
