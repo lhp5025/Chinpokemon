@@ -250,27 +250,27 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         switch (tileList.getSelectedIndex()) {
             case 0:
                 // RNG
-                worldBuilderPanel.setCurrentTile(Zone.grass_1);
+                worldBuilderPanel.setCurrentTile(createdZone.grass_1);
                 //worldBuilderPanel.setCurrentTile(Zone.grass_3);
                 //worldBuilderPanel.setCurrentTile(Zone.grass_2);
                 break;
             case 1:
-                worldBuilderPanel.setCurrentTile(Zone.sidewalk);
+                worldBuilderPanel.setCurrentTile(createdZone.sidewalk);
                 break;
             case 2:
-                worldBuilderPanel.setCurrentTile(Zone.dirt);
+                worldBuilderPanel.setCurrentTile(createdZone.dirt);
                 break;
             case 3:
-                worldBuilderPanel.setCurrentTile(Zone.dirt_puddle);
+                worldBuilderPanel.setCurrentTile(createdZone.dirt_puddle);
                 break;
             case 4:
-                worldBuilderPanel.setCurrentTile(Zone.water);
+                worldBuilderPanel.setCurrentTile(createdZone.water);
                 break;
             case 5:
-                worldBuilderPanel.setCurrentTile(Zone.wall_basic);
+                worldBuilderPanel.setCurrentTile(createdZone.wall_basic);
                 break;
             case 6:
-                worldBuilderPanel.setCurrentTile(Zone.shrub_basic);
+                worldBuilderPanel.setCurrentTile(createdZone.shrub_basic);
                 break;
         }
     }//GEN-LAST:event_tileListValueChanged

@@ -6,19 +6,25 @@
 package world;
 
 import java.awt.Image;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 
 /**
  *
  * @author LHP5025
  */
-public abstract class WorldTile implements Serializable{
+public abstract class WorldTile implements Serializable {
+    
     protected ImageIcon bg_image = null;
     protected ImageIcon fg_image = null;
     protected String name = "";
     public final String type;
-    
+
     public Image getBg_image() {
         return bg_image.getImage();
     }
@@ -30,25 +36,29 @@ public abstract class WorldTile implements Serializable{
     public String getName() {
         return name;
     }
-    
-    public WorldTile(ImageIcon _bg_image, ImageIcon _fg_image, String _name, String _type){
+
+    public WorldTile(ImageIcon _bg_image, ImageIcon _fg_image, String _name, String _type) {
         bg_image = _bg_image;
         fg_image = _fg_image;
         name = _name;
         type = _type;
     }
-    public WorldTile(ImageIcon _bg_image, ImageIcon _fg_image, String _type){
+
+    public WorldTile(ImageIcon _bg_image, ImageIcon _fg_image, String _type) {
         bg_image = _bg_image;
         fg_image = _fg_image;
         type = _type;
     }
-    public WorldTile(ImageIcon _bg_image, String _type){
+
+    public WorldTile(ImageIcon _bg_image, String _type) {
         bg_image = _bg_image;
         type = _type;
     }
-    
+
     @Override
     public String toString() {
         return type + ":" + name;
     }
+
+
 }

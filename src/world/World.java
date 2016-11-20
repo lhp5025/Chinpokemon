@@ -9,6 +9,12 @@ import game.GameObject;
 import game.Vector;
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
@@ -58,20 +64,15 @@ public class World {
     public World(GameObject _game_data) {
         game_data = _game_data;
         WorldTile[][] temp_test = new WorldTile[32][32];
-
-        for (int i = 0; i < 32; i++) {
-
-            for (int j = 0; j < 32; j++) {
-                if (i % 2 == 0) {
-                    temp_test[i][j] = grass1;
-                } else if (j % 3 == 0) {
-                    temp_test[i][j] = grass3;
-                } else {
-                    temp_test[i][j] = grass2;
-                }
+        Zone importZone;
+        try {
+                ObjectInputStream in = new ObjectInputStream(Class.class.getResourceAsStream("/rsc/testZone.zone"));
+                importZone = (Zone) in.readObject();
+                current_zone = importZone;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
 
-        current_zone = new Zone("temp", temp_test);
+        
     }
 }
