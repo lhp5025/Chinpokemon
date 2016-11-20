@@ -8,3 +8,5 @@ Luke Poniatowski, Cory Stonitsch, Clint Motocisky
 #### NPC's + Interaction
 #### Battling
 #### Savegame
+#### More Tiles
+#### More Items

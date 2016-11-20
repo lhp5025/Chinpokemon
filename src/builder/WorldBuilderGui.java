@@ -1,13 +1,19 @@
 package builder;
 
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
 import world.WorldTile;
 import world.Zone;
 
@@ -19,23 +25,46 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     public WorldTile chosenTile;
     WorldBuilderPanel worldBuilderPanel;
     public Zone createdZone;
-    
-    private int worldSizeX= 128;
+
+    private int worldSizeX = 128;
     private int worldSizeY = 128;
-    
+
     WorldTile[][] worldArray;
 
     public WorldBuilderGui() {
+        System.setProperty("sun.java2d.opengl", "True");
+        try {
+            // Set cross-platform Java L&F (also called "Metal")
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println("WARNING: Lood and feel not set");
+        }
+
         initComponents();
         populateZone();
-        
+
         worldBuilderPanel = new WorldBuilderPanel(worldArray);
-        
+
         jScrollPane2.setViewportView(worldBuilderPanel);
         jScrollPane2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        this.addMouseWheelListener(new MouseBindings());
     }
     
+    public class MouseBindings implements MouseWheelListener {
+
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent e) {
+            //System.out.println(e.getWheelRotation() );
+            if (worldBuilderPanel.getBLOCK_SIZE() - e.getWheelRotation() > 1) {
+                worldBuilderPanel.setBLOCK_SIZE(worldBuilderPanel.getBLOCK_SIZE() - e.getWheelRotation());
+            }
+            
+        }
+
+    }
     
     /**
      * Populates the Zone with grass tiles surrounded a layer of wall tiles
@@ -52,7 +81,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
             }
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,22 +92,27 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        jPanel2 = new javax.swing.JPanel();
+        ySizeField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tileList = new javax.swing.JList<>();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         exportButton = new javax.swing.JButton();
-        openButton = new javax.swing.JButton();
+        importButton = new javax.swing.JButton();
         zoneNameField = new javax.swing.JTextField();
         resizeButton = new javax.swing.JButton();
         xSizeField = new javax.swing.JTextField();
-        ySizeField = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 750));
 
+        ySizeField.setText("32");
+
         tileList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "grass1", "grass2", "grass3", "sidewalk", "dirt", "dirt_puddle", "water", "wall_basic", "shrub_basic" };
+            String[] strings = { "grass", "sidewalk", "dirt", "dirt_puddle", "water", "wall_basic", "shrub_basic" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -89,20 +123,11 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tileList);
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(500, 500));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("X");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2))
-        );
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Y");
 
         exportButton.setText("Export");
         exportButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -111,69 +136,108 @@ public class WorldBuilderGui extends javax.swing.JFrame {
             }
         });
 
-        openButton.setText("Open");
-        openButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        importButton.setText("Import");
+        importButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                openButtonMouseClicked(evt);
+                importButtonMouseClicked(evt);
             }
         });
 
-        zoneNameField.setText("Zone Name");
+        zoneNameField.setText("ZoneName");
 
-        resizeButton.setText("Resize");
+        resizeButton.setText("New");
         resizeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 resizeButtonMouseClicked(evt);
             }
         });
 
-        xSizeField.setText("X Size");
+        xSizeField.setText("32");
 
-        ySizeField.setText("Y Size");
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(zoneNameField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(importButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exportButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(resizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(ySizeField))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(xSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(importButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zoneNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                .addComponent(resizeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(xSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(ySizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26))
+        );
+
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane2.setWheelScrollingEnabled(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 697, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 576, Short.MAX_VALUE)
+        );
+
+        jScrollPane2.setViewportView(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(exportButton)
-                    .addComponent(openButton)
-                    .addComponent(zoneNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(resizeButton)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ySizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(xSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(exportButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(openButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(zoneNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                        .addComponent(xSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ySizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(resizeButton)
-                        .addGap(42, 42, 42))))
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -183,25 +247,31 @@ public class WorldBuilderGui extends javax.swing.JFrame {
      * Changes which WorldTile will be placed
      */
     private void tileListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_tileListValueChanged
-        switch(tileList.getSelectedIndex()) {
-            case 0: worldBuilderPanel.setCurrentTile(Zone.grass_1);
-                    break;
-            case 1: worldBuilderPanel.setCurrentTile(Zone.grass_2);
-                    break;
-            case 2: worldBuilderPanel.setCurrentTile(Zone.grass_3);
-                    break;
-            case 3: worldBuilderPanel.setCurrentTile(Zone.sidewalk);
-                    break;
-            case 4: worldBuilderPanel.setCurrentTile(Zone.dirt);
-                    break;
-            case 5: worldBuilderPanel.setCurrentTile(Zone.dirt_puddle);
-                    break;
-            case 6: worldBuilderPanel.setCurrentTile(Zone.water);
-                    break;
-            case 7: worldBuilderPanel.setCurrentTile(Zone.wall_basic);
-                    break;
-            case 8: worldBuilderPanel.setCurrentTile(Zone.shrub_basic);
-                    break;        
+        switch (tileList.getSelectedIndex()) {
+            case 0:
+                // RNG
+                worldBuilderPanel.setCurrentTile(Zone.grass_1);
+                //worldBuilderPanel.setCurrentTile(Zone.grass_3);
+                //worldBuilderPanel.setCurrentTile(Zone.grass_2);
+                break;
+            case 1:
+                worldBuilderPanel.setCurrentTile(Zone.sidewalk);
+                break;
+            case 2:
+                worldBuilderPanel.setCurrentTile(Zone.dirt);
+                break;
+            case 3:
+                worldBuilderPanel.setCurrentTile(Zone.dirt_puddle);
+                break;
+            case 4:
+                worldBuilderPanel.setCurrentTile(Zone.water);
+                break;
+            case 5:
+                worldBuilderPanel.setCurrentTile(Zone.wall_basic);
+                break;
+            case 6:
+                worldBuilderPanel.setCurrentTile(Zone.shrub_basic);
+                break;
         }
     }//GEN-LAST:event_tileListValueChanged
 
@@ -211,41 +281,47 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     private void exportButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exportButtonMouseClicked
         createdZone = new Zone(zoneNameField.getText(), worldArray);
         try {
-            FileOutputStream fileOut = new FileOutputStream(zoneNameField.getText() + ".txt");
+            FileOutputStream fileOut = new FileOutputStream(zoneNameField.getText() + ".zone");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(createdZone);
             out.close();
             fileOut.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_exportButtonMouseClicked
 
-    private void openButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openButtonMouseClicked
+    private void importButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_importButtonMouseClicked
         jFileChooser1.showOpenDialog(jPanel1);
         File file = jFileChooser1.getSelectedFile();
-        try {
-            FileInputStream fileIn = new FileInputStream(file);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            createdZone = (Zone) in.readObject();
-            zoneNameField.setText(createdZone.name);
-            worldBuilderPanel.worldArray = createdZone.getZone_tiles();
-            worldBuilderPanel.repaint();
-        } catch(IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if (file != null) {
+            try {
+                FileInputStream fileIn = new FileInputStream(file);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                createdZone = (Zone) in.readObject();
+                zoneNameField.setText(createdZone.name);
+                worldBuilderPanel.worldArray = createdZone.getZone_tiles();
+                worldBuilderPanel.repaint();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-    }//GEN-LAST:event_openButtonMouseClicked
+
+    }//GEN-LAST:event_importButtonMouseClicked
 
     private void resizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resizeButtonMouseClicked
         try {
             worldSizeX = Integer.parseInt(xSizeField.getText());
             worldSizeY = Integer.parseInt(ySizeField.getText());
+            
             populateZone();
-            worldBuilderPanel.worldArray = worldArray;
+            worldBuilderPanel = new WorldBuilderPanel(worldArray);
+            jScrollPane2.setViewportView(worldBuilderPanel);
             worldBuilderPanel.repaint();
-        } catch(NumberFormatException e) {
+            
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_resizeButtonMouseClicked
@@ -288,11 +364,14 @@ public class WorldBuilderGui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exportButton;
+    private javax.swing.JButton importButton;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton openButton;
     private javax.swing.JButton resizeButton;
     private javax.swing.JList<String> tileList;
     private javax.swing.JTextField xSizeField;
