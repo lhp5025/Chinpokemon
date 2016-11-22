@@ -34,7 +34,7 @@ public class World {
     }
 
     public void movePlayer(Vector _input) {
-        double movement_speed = 0.005 * game_data.getDelta_time();
+        double movement_speed = .15 * game_data.getTheta_time();
         double magnitude = Math.sqrt(_input.getX() * _input.getX() + _input.getY() * _input.getY());
 
         if (magnitude != 0) {

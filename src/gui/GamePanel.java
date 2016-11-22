@@ -14,16 +14,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import world.*;
 
-/**
- * Class.class.getResource("/RSC/water_a1.gif")).getImage()
- *
- * @author LHP5025
- */
 public class GamePanel extends JPanel {
     
     private final GameObject game_date;
     private final Image background_image = new ImageIcon(Class.class.getResource("/rsc/world_bg_1.png")).getImage();
-    private final Image overflow_image = new ImageIcon(Class.class.getResource("/rsc/shrub_basic.png")).getImage();
+    private final Image overflow_image = new ImageIcon(Class.class.getResource("/rsc/dark.png")).getImage();
     private int delta_width = 0;
     private int delta_height = 0;
     private final RenderingHints render_hints;

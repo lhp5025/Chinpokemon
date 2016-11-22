@@ -6,16 +6,8 @@
 package world;
 
 import java.awt.Image;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
 import javax.swing.ImageIcon;
 
 /**
@@ -27,7 +19,6 @@ public abstract class WorldTile implements Serializable {
     // Tile image mapping
     public static final HashMap<String, ImageIcon> TILE_IMGICON_MAP = new  HashMap();
     static {
-        TILE_IMGICON_MAP.put("", new ImageIcon(Class.class.getResource("/rsc/dark.png")) );
         TILE_IMGICON_MAP.put("grass_1", new ImageIcon(Class.class.getResource("/rsc/grass_1.png")) );
         TILE_IMGICON_MAP.put("grass_2", new ImageIcon(Class.class.getResource("/rsc/grass_2.png")) );
         TILE_IMGICON_MAP.put("grass_3", new ImageIcon(Class.class.getResource("/rsc/grass_3.png")) );

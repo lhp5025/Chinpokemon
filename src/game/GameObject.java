@@ -32,6 +32,7 @@ public class GameObject extends JFrame implements Runnable {
     private final JLabel _rnder_time_text = new JLabel();
     private Vector player_movement_input_vector = new Vector(0.0, 0.0);
     private int target_delta_time = 15;
+    private double theta_time = 1;
     private boolean IS_RUNNING = true;
     
     public final World world = new World(this);
@@ -40,6 +41,10 @@ public class GameObject extends JFrame implements Runnable {
 
     public long getDelta_time() {
         return delta_time;
+    }
+    
+    public double getTheta_time() {
+        return theta_time;
     }
     
     public PlayerObject getPlayer() {
@@ -104,6 +109,7 @@ public class GameObject extends JFrame implements Runnable {
                 }
             }
             delta_time = System.currentTimeMillis() - start_time;// Time it took to compute loop
+            theta_time = target_delta_time /  delta_time ;
         }
 
     }
