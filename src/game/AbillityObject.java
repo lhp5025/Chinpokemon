@@ -10,6 +10,14 @@ package game;
  * @author CXM818
  */
 public abstract class AbillityObject{
+    public final int damage;
+    public final int helaing;
+    public final String name;
     
+    public AbillityObject(String _name, int _dmg, int _heal) {
+        this.name = _name;
+        this.damage = _dmg;
+        this.helaing = _heal;
+    }
     
 }

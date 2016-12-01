@@ -50,7 +50,7 @@ public class GameObject extends JFrame implements Runnable {
     public PlayerObject getPlayer() {
         return player_1;
     }
-
+    
     public GameObject() {
         this.setVisible(true);
         this.setSize(800, 600);
@@ -58,6 +58,7 @@ public class GameObject extends JFrame implements Runnable {
         this.addKeyListener( new KeyBindings() );
         this.addMouseWheelListener( new MouseBindings() );
         this.setMinimumSize(new Dimension(800,600));
+        
         
         game_panels = new JLayeredPane();
         game_panels.setDoubleBuffered(true);
@@ -77,7 +78,6 @@ public class GameObject extends JFrame implements Runnable {
         
         this.add(game_panels);
         //!!
-        
         // Shhhhh
         game_thread = new Thread(this, "GameThread");
         game_thread.setPriority(Thread.MAX_PRIORITY);
@@ -103,6 +103,7 @@ public class GameObject extends JFrame implements Runnable {
             if (current_time_for_loop  < target_delta_time) {
                 try {
                     this.wait(target_delta_time - current_time_for_loop);
+                    //this.wait();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
                     System.out.println(ex.toString());

@@ -12,6 +12,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
 import world.*;
 
 public class GamePanel extends JPanel {
@@ -25,6 +26,7 @@ public class GamePanel extends JPanel {
     private Graphics2D g2;
     private WorldTile[][] zone_tiles;
     private Image player_image;
+    private Image offscreen = null;
     
     public long render_time = 0;
     public int zoom_level = 6; //# of blocks displayed in the max direction
@@ -38,7 +40,7 @@ public class GamePanel extends JPanel {
         player_image = game_date.getPlayer().getPlayer_image().getImage();
         
         render_hints = new RenderingHints(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR );
-        render_hints.add(new RenderingHints( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY ));
+        render_hints.add(new RenderingHints( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED ));
     }
     
     public void zoom(int delta) {
@@ -52,9 +54,12 @@ public class GamePanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         long start_time = System.currentTimeMillis();
-        super.paint(g);
         this.setSize(game_date.getWidth(), game_date.getHeight());
-        g2 = (Graphics2D) g;
+        super.paint(g);
+        
+        offscreen = createVolatileImage(this.getWidth(), this.getHeight());
+        
+        g2 = (Graphics2D) offscreen.getGraphics();// g;
         
         g2.setRenderingHints(render_hints);
         
@@ -96,8 +101,15 @@ public class GamePanel extends JPanel {
                 null);
         
         
-        g2.dispose();
+        //g2 = (Graphics2D) g;
+        g.drawImage(offscreen, 0, 0, this);
+        offscreen.flush();
         render_time = System.currentTimeMillis() - start_time;
+        
+        /*synchronized (game_date) {
+            this.game_date.notify();
+        }*/
+        
     }
     
 }
