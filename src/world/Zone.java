@@ -8,6 +8,7 @@ package world;
 import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 /**
@@ -19,6 +20,9 @@ public class Zone implements Serializable {
     public final String name;
     public final int width;
     public final int heihgt;
+    
+    //maps from bk_image to probabilities of each chinpokemon
+    private HashMap tileProbabilities;
     
     // Floor Tiles
     public final static WorldTile grass_1 = new FloorTile( "grass_1" );//new ImageIcon(Class.class.getResource("/rsc/grass_1.png")) );
@@ -36,10 +40,15 @@ public class Zone implements Serializable {
         return zone_tiles;
     }
     
-    public Zone(String _name,  WorldTile[][] _zone_tiles) {
+    public HashMap getTileProbabilities() {
+        return tileProbabilities;
+    }
+    
+    public Zone(String _name,  WorldTile[][] _zone_tiles, HashMap tileProbabilities) {
         name = _name;
         zone_tiles = _zone_tiles;
         width = _zone_tiles.length;
         heihgt = _zone_tiles[0].length;
+        this.tileProbabilities = tileProbabilities;
     }
 }

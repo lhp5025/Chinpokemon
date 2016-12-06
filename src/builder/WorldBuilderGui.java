@@ -9,13 +9,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
+import world.TileProbability;
 import world.WorldTile;
 import world.Zone;
+import java.lang.String;
 
 /**
  * Tool for graphically creating Zone objects
@@ -30,6 +38,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     private int worldSizeY = 128;
 
     WorldTile[][] worldArray;
+    
 
     public WorldBuilderGui() {
         System.setProperty("sun.java2d.opengl", "True");
@@ -69,6 +78,38 @@ public class WorldBuilderGui extends javax.swing.JFrame {
             }
         }
     }
+    
+    public WorldTile[] checkZones() {
+        WorldTile[] listedTiles = new WorldTile[10000];
+        int num = 1;
+        listedTiles[0] = (worldArray[0][0]);
+        
+        //iterate through all tiles in the world array
+        for (int i = 0; i < worldSizeX; i++) {
+            outer:
+            for (int j = 0; j < worldSizeY; j++) {
+                
+//                if(listedTiles.size() == 0) {
+//                   listedTiles.add(worldArray[i][j]);
+//                   continue;
+//                }
+                
+                
+                //compare this tile to all the tile types already added
+                for(WorldTile tile : listedTiles) {
+                    //if that type of tile is already found stop comparing
+                    if(tile != null && (worldArray[i][j].getBg_image() == (tile.getBg_image()))) {
+                        continue outer;
+                    }
+                }
+ //               System.out.printf("%s, %s, %s\n", tile, tile.getBg_image(), worldArray[i][j].getBg_image());
+                listedTiles[num] = worldArray[i][j];
+                num++;
+            }
+        }
+
+        return listedTiles;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,6 +121,11 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        encountersDialog = new javax.swing.JDialog();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tileTypeList = new javax.swing.JList<>();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        hashMapKeys = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         ySizeField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -91,13 +137,50 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         zoneNameField = new javax.swing.JTextField();
         resizeButton = new javax.swing.JButton();
         xSizeField = new javax.swing.JTextField();
+        encountersButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
 
         jFileChooser1.setCurrentDirectory(null);
 
+        tileTypeList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(tileTypeList);
+
+        hashMapKeys.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane5.setViewportView(hashMapKeys);
+
+        javax.swing.GroupLayout encountersDialogLayout = new javax.swing.GroupLayout(encountersDialog.getContentPane());
+        encountersDialog.getContentPane().setLayout(encountersDialogLayout);
+        encountersDialogLayout.setHorizontalGroup(
+            encountersDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(encountersDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, encountersDialogLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        encountersDialogLayout.setVerticalGroup(
+            encountersDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(encountersDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 750));
 
         ySizeField.setText("32");
 
@@ -144,6 +227,13 @@ public class WorldBuilderGui extends javax.swing.JFrame {
 
         xSizeField.setText("32");
 
+        encountersButton.setText("Encounters");
+        encountersButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                encountersButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -165,7 +255,8 @@ public class WorldBuilderGui extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(xSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(xSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(encountersButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -179,7 +270,9 @@ public class WorldBuilderGui extends javax.swing.JFrame {
                 .addComponent(importButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(zoneNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(encountersButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(resizeButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -200,11 +293,11 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 697, Short.MAX_VALUE)
+            .addGap(0, 878, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 576, Short.MAX_VALUE)
+            .addGap(0, 722, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(jPanel1);
@@ -226,7 +319,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane2)))
                 .addContainerGap())
         );
 
@@ -269,7 +362,16 @@ public class WorldBuilderGui extends javax.swing.JFrame {
      * Serializes Zone object and places file in project directory
      */
     private void exportButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exportButtonMouseClicked
-        createdZone = new Zone(zoneNameField.getText(), worldArray);
+        HashMap tp;
+        tp = new HashMap<String, TileProbability>();
+        TileProbability grass = new TileProbability(250);
+        grass.map.put(0, "magikarp");
+        grass.map.put(5000, "pikachu");
+        
+        tp.put("grass_1", grass);
+        tp.put("sun.awt.image.ToolkitImage@77d8222e", null);
+        
+        createdZone = new Zone(zoneNameField.getText(), worldArray, tp);
         try {
             FileOutputStream fileOut = new FileOutputStream(zoneNameField.getText() + ".zone");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -316,6 +418,19 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_resizeButtonMouseClicked
 
+    private void encountersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encountersButtonMouseClicked
+//        
+//        encountersDialog.setVisible(true);
+//        WorldTile[] listedTiles = checkZones();
+//        DefaultListModel model = new DefaultListModel();
+//        for(WorldTile tile: listedTiles) {
+//            System.out.println(tile.getBg_image());
+//            model.addElement(tile);
+//        }
+//        tileTypeList.setModel(model);
+//        
+    }//GEN-LAST:event_encountersButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -353,7 +468,10 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton encountersButton;
+    private javax.swing.JDialog encountersDialog;
     private javax.swing.JButton exportButton;
+    private javax.swing.JList<String> hashMapKeys;
     private javax.swing.JButton importButton;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
@@ -362,8 +480,11 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JButton resizeButton;
     private javax.swing.JList<String> tileList;
+    private javax.swing.JList<String> tileTypeList;
     private javax.swing.JTextField xSizeField;
     private javax.swing.JTextField ySizeField;
     private javax.swing.JTextField zoneNameField;

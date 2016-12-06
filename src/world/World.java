@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.ImageIcon;
 
 /**
@@ -28,6 +29,8 @@ public class World {
     private ArrayList<Zone> zones = new ArrayList<>();
     private Zone current_zone;
     private Vector player_location = new Vector(2.0, 2.0);
+    
+    Random generator = new Random();
 
     private boolean collisionDetection(double x, double y) {
         return false;
@@ -43,6 +46,13 @@ public class World {
             // If collision checks out
             if (checkCollision(new Vector(player_location.getX() + normal.getX() * movement_speed, player_location.getY() + normal.getY() * movement_speed))) {
                 player_location.incLocation(normal.getX() * movement_speed, normal.getY() * movement_speed);
+               
+               int randomEncounterNumber = generator.nextInt(10000);
+               TileProbability tp = (TileProbability) current_zone.getTileProbabilities().get(current_zone.getZone_tiles()[(int) Math.floor(player_location.getX())][(int) Math.floor(player_location.getY())].BG_IMGICON_MAP);
+               if(randomEncounterNumber < tp.encounterProbability) {
+                    randomEncounterNumber = generator.nextInt(10000);
+                    System.out.println(tp.map.floorEntry(randomEncounterNumber).getValue());
+               }
             }
 
         }
@@ -80,7 +90,7 @@ public class World {
         WorldTile[][] temp_test = new WorldTile[32][32];
         Zone importZone;
         try {
-            ObjectInputStream in = new ObjectInputStream(Class.class.getResourceAsStream("/rsc/testZone.zone"));
+            ObjectInputStream in = new ObjectInputStream(Class.class.getResourceAsStream("/rsc/zoneTest.zone"));
             importZone = (Zone) in.readObject();
             current_zone = importZone;
         } catch (Exception e) {
