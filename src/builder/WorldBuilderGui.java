@@ -10,13 +10,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
+import world.TileProbability;
 import world.WorldTile;
 import world.Zone;
+import java.lang.String;
 
 /**
  * Tool for graphically creating Zone objects
@@ -31,6 +38,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     private int worldSizeY = 128;
 
     WorldTile[][] worldArray;
+    
 
     public WorldBuilderGui() {
         System.setProperty("sun.java2d.opengl", "True");
@@ -71,25 +79,35 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         }
     }
     
-    public ArrayList<WorldTile> checkZones() {
-        ArrayList<WorldTile> listedTiles = new ArrayList<>();
+    public WorldTile[] checkZones() {
+        WorldTile[] listedTiles = new WorldTile[10000];
+        int num = 1;
+        listedTiles[0] = (worldArray[0][0]);
         
         //iterate through all tiles in the world array
         for (int i = 0; i < worldSizeX; i++) {
+            outer:
             for (int j = 0; j < worldSizeY; j++) {
                 
-                //System.out.println(worldArray[i][j].getBg_image());
+//                if(listedTiles.size() == 0) {
+//                   listedTiles.add(worldArray[i][j]);
+//                   continue;
+//                }
+                
+                
                 //compare this tile to all the tile types already added
                 for(WorldTile tile : listedTiles) {
-                    
                     //if that type of tile is already found stop comparing
-                    if(worldArray[i][j].getBg_image().equals(tile.getBg_image())) {
-                        break;
+                    if(tile != null && (worldArray[i][j].getBg_image() == (tile.getBg_image()))) {
+                        continue outer;
                     }
-                listedTiles.add(worldArray[i][j]);    
                 }
+ //               System.out.printf("%s, %s, %s\n", tile, tile.getBg_image(), worldArray[i][j].getBg_image());
+                listedTiles[num] = worldArray[i][j];
+                num++;
             }
         }
+
         return listedTiles;
     }
 
@@ -106,6 +124,8 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         encountersDialog = new javax.swing.JDialog();
         jScrollPane3 = new javax.swing.JScrollPane();
         tileTypeList = new javax.swing.JList<>();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        hashMapKeys = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         ySizeField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -130,6 +150,13 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tileTypeList);
 
+        hashMapKeys.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane5.setViewportView(hashMapKeys);
+
         javax.swing.GroupLayout encountersDialogLayout = new javax.swing.GroupLayout(encountersDialog.getContentPane());
         encountersDialog.getContentPane().setLayout(encountersDialogLayout);
         encountersDialogLayout.setHorizontalGroup(
@@ -137,14 +164,20 @@ public class WorldBuilderGui extends javax.swing.JFrame {
             .addGroup(encountersDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, encountersDialogLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         encountersDialogLayout.setVerticalGroup(
             encountersDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(encountersDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -329,7 +362,16 @@ public class WorldBuilderGui extends javax.swing.JFrame {
      * Serializes Zone object and places file in project directory
      */
     private void exportButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exportButtonMouseClicked
-        createdZone = new Zone(zoneNameField.getText(), worldArray);
+        HashMap tp;
+        tp = new HashMap<String, TileProbability>();
+        TileProbability grass = new TileProbability(250);
+        grass.map.put(0, "magikarp");
+        grass.map.put(5000, "pikachu");
+        
+        tp.put("grass_1", grass);
+        tp.put("sun.awt.image.ToolkitImage@77d8222e", null);
+        
+        createdZone = new Zone(zoneNameField.getText(), worldArray, tp);
         try {
             FileOutputStream fileOut = new FileOutputStream(zoneNameField.getText() + ".zone");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -377,15 +419,16 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     }//GEN-LAST:event_resizeButtonMouseClicked
 
     private void encountersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encountersButtonMouseClicked
-        
-        encountersDialog.setVisible(true);
-        ArrayList<WorldTile> listedTiles = checkZones();
-        DefaultListModel model = new DefaultListModel();
-        for(WorldTile tile: listedTiles) {
-            model.addElement(tile);
-        }
-        tileTypeList.setModel(model);
-        
+//        
+//        encountersDialog.setVisible(true);
+//        WorldTile[] listedTiles = checkZones();
+//        DefaultListModel model = new DefaultListModel();
+//        for(WorldTile tile: listedTiles) {
+//            System.out.println(tile.getBg_image());
+//            model.addElement(tile);
+//        }
+//        tileTypeList.setModel(model);
+//        
     }//GEN-LAST:event_encountersButtonMouseClicked
 
     /**
@@ -428,6 +471,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     private javax.swing.JButton encountersButton;
     private javax.swing.JDialog encountersDialog;
     private javax.swing.JButton exportButton;
+    private javax.swing.JList<String> hashMapKeys;
     private javax.swing.JButton importButton;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
@@ -437,6 +481,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JButton resizeButton;
     private javax.swing.JList<String> tileList;
     private javax.swing.JList<String> tileTypeList;
