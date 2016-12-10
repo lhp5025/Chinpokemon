@@ -163,9 +163,8 @@
                               <Component id="xSizeField" min="-2" pref="31" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="encountersButton" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -180,8 +179,6 @@
                   <Component id="importButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="zoneNameField" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="encountersButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="resizeButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -280,14 +277,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="32"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="encountersButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Encounters"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="encountersButtonMouseClicked"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

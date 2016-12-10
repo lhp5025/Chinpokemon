@@ -47,9 +47,13 @@ public class World {
             if (checkCollision(new Vector(player_location.getX() + normal.getX() * movement_speed, player_location.getY() + normal.getY() * movement_speed))) {
                 player_location.incLocation(normal.getX() * movement_speed, normal.getY() * movement_speed);
                
+               //Generate a number between 0 and 9999
                int randomEncounterNumber = generator.nextInt(10000);
+               //Get the encounter probability based on the tile player is on
                TileProbability tp = (TileProbability) current_zone.getTileProbabilities().get(current_zone.getZone_tiles()[(int) Math.floor(player_location.getX())][(int) Math.floor(player_location.getY())].BG_IMGICON_MAP);
+               //If the generated number is less than the encounter probability number
                if(randomEncounterNumber < tp.encounterProbability) {
+                    //Generate another random number to see which pokemon player will encounter
                     randomEncounterNumber = generator.nextInt(10000);
                     System.out.println(tp.map.floorEntry(randomEncounterNumber).getValue());
                }
