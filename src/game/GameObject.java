@@ -25,7 +25,7 @@ import world.World;
  */
 public class GameObject extends JFrame implements Runnable {
 
-    private long delta_time;// Time between each compute frame
+    private long delta_time; // Time between each compute frame
     private final JLayeredPane game_panels;
     private final GamePanel game_render_panel;
     private final Inventory_Panel game_inventory_panel;
@@ -35,6 +35,7 @@ public class GameObject extends JFrame implements Runnable {
     private double theta_time = 1;
     private boolean IS_RUNNING = true;
     
+    public final BattleObject battleSystem = new BattleObject(this);
     public final World world = new World(this);
     public final PlayerObject player_1 = new PlayerObject();
     public Thread game_thread;
@@ -51,13 +52,24 @@ public class GameObject extends JFrame implements Runnable {
         return player_1;
     }
     
+    public void battleSysStart(ChinpokemonObject _enemy) {
+        // Open battle window
+        
+        // Propt user to choose their battle chinpokemon
+        
+        // Start battle
+        this.battleSystem.newBattle(_enemy, player_1.activeChinpokemon);
+    }
+    
     public GameObject() {
+        // Init for display window
         this.setVisible(true);
         this.setSize(800, 600);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.addKeyListener( new KeyBindings() );
-        this.addMouseWheelListener( new MouseBindings() );
         this.setMinimumSize(new Dimension(800,600));
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // Closing the window exits the program
+        this.addKeyListener( new KeyBindings() ); // Add key listeners
+        this.addMouseWheelListener( new MouseBindings() ); // Add mouse listeners
+        
         
         
         game_panels = new JLayeredPane();
@@ -68,6 +80,7 @@ public class GameObject extends JFrame implements Runnable {
         
         
         game_inventory_panel = new Inventory_Panel(this);
+        game_inventory_panel.setVisible(false);
         game_panels.add(game_inventory_panel, new Integer(2));
         
         _rnder_time_text.setBounds(0, 0, 800, 30);
@@ -143,6 +156,7 @@ public class GameObject extends JFrame implements Runnable {
             }
             // Open close inventory
             if (ke.getKeyChar() == 'i' || ke.getKeyChar() == 'I'){
+                game_inventory_panel.repaint();
                 game_inventory_panel.setVisible( !game_inventory_panel.isVisible() );
             }
             

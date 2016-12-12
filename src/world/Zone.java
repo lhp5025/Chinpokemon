@@ -5,6 +5,7 @@
  */
 package world;
 
+import game.ChinpokemonObject;
 import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,35 +21,27 @@ public class Zone implements Serializable {
     public final String name;
     public final int width;
     public final int heihgt;
-    
-    //maps from bk_image to probabilities of each chinpokemon
-    private HashMap tileProbabilities;
-    
+ 
     // Floor Tiles
-    public final static WorldTile grass_1 = new FloorTile( "grass_1" );//new ImageIcon(Class.class.getResource("/rsc/grass_1.png")) );
-    public final static WorldTile grass_2 = new FloorTile( "grass_2" );// new ImageIcon(Class.class.getResource("/rsc/grass_2.png")) );
-    public final static WorldTile grass_3 = new FloorTile(  "grass_3" );//new ImageIcon(Class.class.getResource("/rsc/grass_3.png")) );
-    public final static WorldTile sidewalk = new FloorTile(  "sidewalk_1" );//new ImageIcon(Class.class.getResource("/rsc/sidewalk_1.png")) );
-    public final static WorldTile dirt = new FloorTile( "dirt_1" );// new ImageIcon(Class.class.getResource("/rsc/dirt_1.png")) );
-    public final static WorldTile dirt_puddle = new FloorTile( "dirt_puddle_1" );// new ImageIcon(Class.class.getResource("/rsc/dirt_puddle_1.png")) );
+    public final static WorldTile grass_1 = new FloorTile( "grass_1", "grass" );
+    public final static WorldTile grass_2 = new FloorTile( "grass_2","grass"  );
+    public final static WorldTile grass_3 = new FloorTile(  "grass_3","grass"  );
+    public final static WorldTile sidewalk = new FloorTile(  "sidewalk_1", "sidewalk" );
+    public final static WorldTile dirt = new FloorTile( "dirt_1", "dirt" );
+    public final static WorldTile dirt_puddle = new FloorTile( "dirt_puddle_1", "dirt" );
     // Wall tiles
-    public final static WorldTile water = new WallTile( "water_a1" );// new ImageIcon(Class.class.getResource("/rsc/water_a1.gif")) );
-    public final static WorldTile wall_basic = new WallTile( "wall_basic_1" );// new ImageIcon(Class.class.getResource("/rsc/wall_basic_1.png")) );
-    public final static WorldTile shrub_basic = new WallTile( "shrub_basic" );// new ImageIcon(Class.class.getResource("/rsc/shrub_basic.png")) );
+    public final static WorldTile water = new WallTile( "water_a1","water" );
+    public final static WorldTile wall_basic = new WallTile( "wall_basic_1", "wall" );
+    public final static WorldTile shrub_basic = new WallTile( "shrub_basic", "shrub" );
     
     public WorldTile[][] getZone_tiles() {
         return zone_tiles;
     }
     
-    public HashMap getTileProbabilities() {
-        return tileProbabilities;
-    }
-    
-    public Zone(String _name,  WorldTile[][] _zone_tiles, HashMap tileProbabilities) {
+    public Zone(String _name,  WorldTile[][] _zone_tiles) {
         name = _name;
         zone_tiles = _zone_tiles;
         width = _zone_tiles.length;
         heihgt = _zone_tiles[0].length;
-        this.tileProbabilities = tileProbabilities;
     }
 }

@@ -20,6 +20,7 @@ public abstract class ChinpokemonObject {
     protected double maxHealth;
     protected double currentHealth;
     protected int power;
+    public AbillityObject ability = new AbillityObject("ATTACK",1,0);
 
     
     public ChinpokemonObject(String _species, String name, Image _img) {
@@ -40,6 +41,10 @@ public abstract class ChinpokemonObject {
 
     private void evolve() {
 
+    }
+    
+    public AbillityObject getAbility() {
+        return this.ability;
     }
 
     public abstract void feed();
@@ -70,6 +75,6 @@ public abstract class ChinpokemonObject {
     
     @Override
     public String toString() {
-        return this.name;
+        return this.name + "(" + power + ")";
     }
 }

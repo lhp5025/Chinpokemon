@@ -5,8 +5,10 @@
  */
 package world;
 
+import game.ChinpokemonObject;
 import game.GameObject;
 import game.Vector;
+import game.chinpokemon.*;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.io.File;
@@ -47,16 +49,17 @@ public class World {
             if (checkCollision(new Vector(player_location.getX() + normal.getX() * movement_speed, player_location.getY() + normal.getY() * movement_speed))) {
                 player_location.incLocation(normal.getX() * movement_speed, normal.getY() * movement_speed);
                
-               //Generate a number between 0 and 9999
-               int randomEncounterNumber = generator.nextInt(10000);
-               //Get the encounter probability based on the tile player is on
-               TileProbability tp = (TileProbability) current_zone.getTileProbabilities().get(current_zone.getZone_tiles()[(int) Math.floor(player_location.getX())][(int) Math.floor(player_location.getY())].BG_IMGICON_MAP);
-               //If the generated number is less than the encounter probability number
-               if(randomEncounterNumber < tp.encounterProbability) {
-                    //Generate another random number to see which pokemon player will encounter
-                    randomEncounterNumber = generator.nextInt(10000);
-                    System.out.println(tp.map.floorEntry(randomEncounterNumber).getValue());
-               }
+               // Check for Encounter
+              ChinpokemonObject encountered = getEncounter( (int) Math.floor( player_location.getX() ), (int) Math.floor( player_location.getY() ));
+              
+              // If there is an encounter
+              if (encountered != null) {
+                  System.out.println( encountered.toString() );
+                  // Start battle
+                  game_data.battleSysStart(encountered);
+              }
+             
+               
             }
 
         }
@@ -70,13 +73,9 @@ public class World {
                 return true;
             }
         } catch (Exception e) {
+            // If out of bounds
             return false;
         }
-        /*if (current_zone.getZone_tiles()[(int) Math.floor(_pos.getX())][(int) Math.floor(_pos.getY())].type == "WALL"
-                && _pos.getX() > 0.0 && _pos.getX() <= current_zone.width
-                && _pos.getY() > 0.0 && _pos.getY() <= current_zone.heihgt) {
-            return false;
-        }*/
         return false;
     }
 
@@ -86,6 +85,33 @@ public class World {
 
     public Zone getCurrent_zone() {
         return current_zone;
+    }
+    
+    public ChinpokemonObject getEncounter(int x, int y) {
+        ChinpokemonObject TO_RETURN = null; // Chinpokemon to return
+        
+        // If the player is on a dirt or grass tyle
+        if ( current_zone.getZone_tiles()[x][y].getName().equals("grass")  || current_zone.getZone_tiles()[x][y].getName().equals("dirt") ) {
+            Random rng = new Random(System.currentTimeMillis());
+            int encoutnerProbability_1 = rng.nextInt(1000) + 1; // Gen a random number from 1 to 100
+            
+            
+            // Uncommon .01% chance of encounter
+            if (encoutnerProbability_1 % 1000 == 0) {
+                int encoutnerProbability_2 = rng.nextInt(1); // Gen a random number to pick the chinpokemon
+                
+                if (encoutnerProbability_2 == 0) TO_RETURN = new Slg_al( rng.nextInt(25) + 1); // Return shoe of level 1 to 25
+            }
+            // Common .1% chanceof encounter
+            else if (encoutnerProbability_1 % 100 == 0) {
+                int encoutnerProbability_2 = rng.nextInt(2);  // Gen a random number to pick the chinpokemon
+                
+                if (encoutnerProbability_2 == 0) TO_RETURN = new Shoe( rng.nextInt(25) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 1) TO_RETURN = new Cellary( rng.nextInt(25) + 1); // Return shoe of level 1 to 25
+            }
+            
+        }
+        return TO_RETURN;
     }
 
     //!! 

@@ -26,7 +26,6 @@ public class Inventory_Panel extends javax.swing.JPanel {
 
     public Inventory_Panel(GameObject _data_source) {
         game_data = _data_source;
-        this.setVisible(true);
         this.setBounds(50, 50, 600, 500);
         initComponents();
         //
@@ -310,7 +309,9 @@ public class Inventory_Panel extends javax.swing.JPanel {
                     "Species: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).species
                     + "\nPower: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getPower()
                     + "\nMax Health: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getMaxHealth()
-                    + "\nHealth: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getCurrentHealth());
+                    + "\nHealth: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getCurrentHealth()
+                    + "\nAbility: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getAbility()
+            );
             imageOutPanel.setImage(((ChinpokemonObject) chinpokemonList.getSelectedValue()).getImageDefault());
         }
     }//GEN-LAST:event_chinpokemonListMouseClicked

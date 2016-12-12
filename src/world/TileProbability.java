@@ -9,6 +9,10 @@ public class TileProbability implements Serializable {
     
     public int encounterProbability;
     
+    public void put(String s) {
+        map.put(map.size(), s);
+    }
+    
     public TileProbability(int encounterProbability) {
         this.encounterProbability = encounterProbability;
     }

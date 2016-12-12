@@ -315,8 +315,9 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         
         HashMap tp = new HashMap<String, TileProbability>();
         TileProbability grass = new TileProbability(50);
-        grass.map.put(0, "magikarp");
-        grass.map.put(5000, "pikachu");
+        grass.map.put(0, "shoe");
+        grass.map.put(5000, "cellary");
+        grass.map.put(5001, "orb");
         
         tp.put("grass_1", grass);
         tp.put("grass_2", grass);
@@ -326,7 +327,7 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         tp.put("sidewalk_1", grass);
                
         
-        createdZone = new Zone(zoneNameField.getText(), worldArray, tp);
+        createdZone = new Zone(zoneNameField.getText(), worldArray);
         try {
             FileOutputStream fileOut = new FileOutputStream(zoneNameField.getText() + ".zone");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
