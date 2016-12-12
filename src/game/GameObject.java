@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -29,6 +30,7 @@ public class GameObject extends JFrame implements Runnable {
     private final JLayeredPane game_panels;
     private final GamePanel game_render_panel;
     private final Inventory_Panel game_inventory_panel;
+    private final BattleFrame battle_pannel;
     private final JLabel _rnder_time_text = new JLabel();
     private Vector player_movement_input_vector = new Vector(0.0, 0.0);
     private int target_delta_time = 15;
@@ -83,9 +85,19 @@ public class GameObject extends JFrame implements Runnable {
         game_inventory_panel.setVisible(false);
         game_panels.add(game_inventory_panel, new Integer(2));
         
+        battle_pannel = new BattleFrame();
+        battle_pannel.setVisible(false);
+        game_panels.add(battle_pannel, new Integer(3));
+        try {
+            battle_pannel.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         _rnder_time_text.setBounds(0, 0, 800, 30);
         _rnder_time_text.setBackground(Color.black);
         _rnder_time_text.setForeground(Color.white);
+        _rnder_time_text.setVisible(false);
         
         game_panels.add(_rnder_time_text, new Integer(10));
         
