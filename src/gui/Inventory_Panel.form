@@ -55,7 +55,6 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="imageOutPanel" alignment="1" max="32767" attributes="0"/>
                       <Component id="jScrollPane4" alignment="1" pref="117" max="32767" attributes="0"/>
-                      <Component id="playerCredits" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -66,8 +65,6 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Component id="imageOutPanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="playerCredits" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jScrollPane4" min="-2" pref="98" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -111,11 +108,6 @@
             </DimensionLayout>
           </Layout>
         </Container>
-        <Component class="javax.swing.JLabel" name="playerCredits">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Credits"/>
-          </Properties>
-        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JTabbedPane" name="tabPane">
@@ -147,12 +139,13 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="195" max="-2" attributes="0"/>
-                      <EmptySpace pref="76" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="chinpokemonRenderButton" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
-                          <Component id="feedButton" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
-                          <Component id="renameButton" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
+                          <Component id="chinpokemonRenderButton" alignment="0" pref="127" max="32767" attributes="0"/>
+                          <Component id="feedButton" alignment="0" pref="127" max="32767" attributes="0"/>
+                          <Component id="renameButton" alignment="0" pref="127" max="32767" attributes="0"/>
                           <Component id="chinpokemonInput" alignment="1" max="32767" attributes="0"/>
+                          <Component id="setActive" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -170,6 +163,8 @@
                               <Component id="renameButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                               <Component id="chinpokemonInput" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="setActive" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="chinpokemonRenderButton" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -235,6 +230,15 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="chinpokemonInput">
+            </Component>
+            <Component class="javax.swing.JButton" name="setActive">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Set Active"/>
+                <Property name="focusable" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="setActiveActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

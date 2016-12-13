@@ -12,15 +12,27 @@ public class BattleObject {
     private final GameObject game_data;
     private Thread battle = null;
     private AbillityObject playersAbilityChoice = null;
-
+    private ChinpokemonObject enemy_chinpokemon;
+    private ChinpokemonObject player_chinpokemon;
+    
     public void PlayerAction() {
         if ( battle != null && battle.isAlive() ) {
             battle.notify();
         }
     }
     
+    public ChinpokemonObject getEnemy() {
+        return enemy_chinpokemon;
+    }
+    
+    public ChinpokemonObject getPlayer() {
+        return player_chinpokemon;
+    }
+    
     public void newBattle(ChinpokemonObject _enemy, ChinpokemonObject _player) {
-   
+        enemy_chinpokemon = _enemy;
+        player_chinpokemon = _player;
+        
         battle = new Thread("Battle") {
             @Override
             public synchronized void run() {

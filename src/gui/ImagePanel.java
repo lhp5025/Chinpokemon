@@ -5,6 +5,7 @@
  */
 package gui;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
@@ -15,6 +16,8 @@ import javax.swing.JPanel;
  */
 public class ImagePanel extends JPanel{
     private Image image;
+    public Boolean aspectLock = false;
+    
     
     public ImagePanel(Image _img) {
         super();
@@ -31,9 +34,20 @@ public class ImagePanel extends JPanel{
         repaint();
     }
     
+    public void setAspectLock( Boolean _set) {
+        aspectLock = _set;
+    }
+    
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        
+        if (aspectLock) { 
+            int maxDimension = Math.min(this.getWidth(), this.getHeight());
+            this.setSize(maxDimension, maxDimension);
+            this.setPreferredSize(new Dimension(maxDimension, maxDimension));
+        }
+        
         g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
     }
 }

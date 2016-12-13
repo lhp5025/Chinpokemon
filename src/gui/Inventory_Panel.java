@@ -19,7 +19,6 @@ public class Inventory_Panel extends javax.swing.JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        playerCredits.setText("Credits: " + game_data.player_1.getCredits());
     }
 
     private final GameObject game_data;
@@ -47,7 +46,6 @@ public class Inventory_Panel extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         outputText = new javax.swing.JTextPane();
         imageOutPanel = new gui.ImagePanel();
-        playerCredits = new javax.swing.JLabel();
         tabPane = new javax.swing.JTabbedPane();
         chinpokemonPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -56,6 +54,7 @@ public class Inventory_Panel extends javax.swing.JPanel {
         feedButton = new javax.swing.JButton();
         renameButton = new javax.swing.JButton();
         chinpokemonInput = new javax.swing.JTextField();
+        setActive = new javax.swing.JButton();
         inventoryPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         inventoryList = new javax.swing.JList();
@@ -82,8 +81,6 @@ public class Inventory_Panel extends javax.swing.JPanel {
             .addGap(0, 117, Short.MAX_VALUE)
         );
 
-        playerCredits.setText("Credits");
-
         javax.swing.GroupLayout optPanelLayout = new javax.swing.GroupLayout(optPanel);
         optPanel.setLayout(optPanelLayout);
         optPanelLayout.setHorizontalGroup(
@@ -92,8 +89,7 @@ public class Inventory_Panel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(optPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(imageOutPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                    .addComponent(playerCredits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
                 .addContainerGap())
         );
         optPanelLayout.setVerticalGroup(
@@ -101,8 +97,6 @@ public class Inventory_Panel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optPanelLayout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(imageOutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(playerCredits)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -154,6 +148,14 @@ public class Inventory_Panel extends javax.swing.JPanel {
             }
         });
 
+        setActive.setText("Set Active");
+        setActive.setFocusable(false);
+        setActive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setActiveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout chinpokemonPanelLayout = new javax.swing.GroupLayout(chinpokemonPanel);
         chinpokemonPanel.setLayout(chinpokemonPanelLayout);
         chinpokemonPanelLayout.setHorizontalGroup(
@@ -161,12 +163,13 @@ public class Inventory_Panel extends javax.swing.JPanel {
             .addGroup(chinpokemonPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addGap(76, 76, 76)
                 .addGroup(chinpokemonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chinpokemonRenderButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(feedButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(renameButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chinpokemonInput, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(chinpokemonRenderButton, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                    .addComponent(feedButton, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                    .addComponent(renameButton, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                    .addComponent(chinpokemonInput, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(setActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         chinpokemonPanelLayout.setVerticalGroup(
@@ -181,6 +184,8 @@ public class Inventory_Panel extends javax.swing.JPanel {
                         .addComponent(renameButton)
                         .addGap(1, 1, 1)
                         .addComponent(chinpokemonInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(setActive)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(chinpokemonRenderButton)))
                 .addContainerGap())
@@ -361,6 +366,22 @@ public class Inventory_Panel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_feedButtonActionPerformed
 
+    private void setActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setActiveActionPerformed
+        if (chinpokemonList.getSelectedIndex() != -1) {
+            
+            game_data.player_1.activeChinpokemon = (ChinpokemonObject) chinpokemonList.getSelectedValue();
+            
+            outputText.setText(
+                    "Species: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).species
+                    + "\nPower: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getPower()
+                    + "\nMax Health: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getMaxHealth()
+                    + "\nHealth: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getCurrentHealth()
+                    + "\nAbility: " + ((ChinpokemonObject) chinpokemonList.getSelectedValue()).getAbility()
+            );
+            imageOutPanel.setImage(((ChinpokemonObject) chinpokemonList.getSelectedValue()).getImageDefault());
+        }
+    }//GEN-LAST:event_setActiveActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField chinpokemonInput;
@@ -378,8 +399,8 @@ public class Inventory_Panel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel optPanel;
     private javax.swing.JTextPane outputText;
-    private javax.swing.JLabel playerCredits;
     private javax.swing.JButton renameButton;
+    private javax.swing.JButton setActive;
     private javax.swing.JTabbedPane tabPane;
     // End of variables declaration//GEN-END:variables
 }

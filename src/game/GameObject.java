@@ -56,11 +56,27 @@ public class GameObject extends JFrame implements Runnable {
     
     public void battleSysStart(ChinpokemonObject _enemy) {
         // Open battle window
+        battleSystem.newBattle(_enemy, player_1.activeChinpokemon);
+        battle_pannel.ReInit(this);
+        battle_pannel.setVisible(true);
+        
+        // Remove listeners + stop player
+        this.removeKeyListener(this.getKeyListeners()[0]);
+        player_movement_input_vector = new Vector(0.0, 0.0);
         
         // Propt user to choose their battle chinpokemon
         
         // Start battle
         this.battleSystem.newBattle(_enemy, player_1.activeChinpokemon);
+    }
+    
+    public void battleSysEnd() {
+        // Close battle window
+        battle_pannel.setVisible(false);
+        
+        
+        // Readd Key listensrws
+        this.addKeyListener( new KeyBindings() ); // Add key listeners
     }
     
     public GameObject() {
@@ -71,8 +87,6 @@ public class GameObject extends JFrame implements Runnable {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // Closing the window exits the program
         this.addKeyListener( new KeyBindings() ); // Add key listeners
         this.addMouseWheelListener( new MouseBindings() ); // Add mouse listeners
-        
-        
         
         game_panels = new JLayeredPane();
         game_panels.setDoubleBuffered(true);
