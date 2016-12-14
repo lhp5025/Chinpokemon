@@ -5,9 +5,11 @@
  */
 package game;
 
+import game.chinpokemon.Shoe;
 import gui.*;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseWheelEvent;
@@ -16,6 +18,8 @@ import java.beans.PropertyVetoException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -60,6 +64,7 @@ public class GameObject extends JFrame implements Runnable {
         if (player_1.activeChinpokemon == null) {
             if (player_1.inventory.getChinpokemon().size() == 0) {
                 // Error, no chinokemon to battle
+                
             } else {
                 player_1.activeChinpokemon = player_1.inventory.getChinpokemon().get(new Random().nextInt( player_1.inventory.getChinpokemon().size() ) );
                 battleSystem.newBattle(_enemy, player_1.activeChinpokemon);
@@ -84,8 +89,8 @@ public class GameObject extends JFrame implements Runnable {
         this.battleSystem.newBattle(_enemy, player_1.activeChinpokemon);
     }
     
-    public void battleStateChange() {
-        battle_pannel.upDate();
+    public void battleStateChange(String _msg) {
+        battle_pannel.upDate(_msg);
     }
     
     public void battleSysEnd() {
@@ -119,16 +124,30 @@ public class GameObject extends JFrame implements Runnable {
         
         battle_pannel = new BattleFrame();
         battle_pannel.setVisible(false);
-        game_panels.add(battle_pannel, new Integer(3));
+        game_panels.add(battle_pannel, new Integer(4));
         try {
             battle_pannel.setMaximum(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        JButton openInventory = new JButton();
+        openInventory.setText("Inventory");
+        openInventory.setSize(150, 50);
+        openInventory.setFocusable(false);
+        openInventory.setVisible(true);
+        openInventory.addActionListener(new AbstractAction("name of button") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game_inventory_panel.repaint();
+                game_inventory_panel.reInit();
+                game_inventory_panel.setVisible( !game_inventory_panel.isVisible() );
+            }
+        });
+        game_panels.add(openInventory , new Integer(3));
+        
         _rnder_time_text.setBounds(0, 0, 800, 30);
-        _rnder_time_text.setBackground(Color.black);
-        _rnder_time_text.setForeground(Color.white);
+        _rnder_time_text.setForeground(Color.black);
         _rnder_time_text.setVisible(false);
         
         game_panels.add(_rnder_time_text, new Integer(10));

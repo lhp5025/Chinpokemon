@@ -16,27 +16,32 @@ import javax.swing.ImageIcon;
 public class Labtron extends ChinpokemonObject{
     public Labtron(String name) {
         super("Labtron", name, new ImageIcon(Class.class.getResource("/rsc/labtron.png")).getImage());
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
+        this.maxHealth = this.power * 15; 
+        this.currentHealth =  this.maxHealth;
+        this.ability = new AbillityObject("Attack", this.power * 3, this.power * 0);
+        
     }
     
     public Labtron(int _pwer) {
         super("Labtron", "Labtron", new ImageIcon(Class.class.getResource("/rsc/labtron.png")).getImage());
         this.power = _pwer;
-        this.maxHealth = this.power * 2; 
+        this.maxHealth = this.power * 15; 
         this.currentHealth =  this.maxHealth;
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
+        this.ability = new AbillityObject("Attack", this.power * 3, this.power * 0);
     }
     
     public Labtron() {
         super("Labtron", "Labtron", new ImageIcon(Class.class.getResource("/rsc/labtron.png")).getImage());
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
+        this.maxHealth = this.power * 15; 
+        this.currentHealth =  this.maxHealth;
+        this.ability = new AbillityObject("Attack", this.power * 3, this.power * 0);
     }
 
     @Override
     public void feed() {
         this.power++; // Increase power level
-        this.maxHealth += 2; // Increase max health
-        this.currentHealth += 2; // Increase current heath
-        this.ability.upgrade(3, 3); // Increase abilites power
+        this.maxHealth += 15; // Increase max health
+        this.currentHealth += 15; // Increase current heath
+        this.ability.upgrade(3, 1); // Increase abilites power
     }
 }

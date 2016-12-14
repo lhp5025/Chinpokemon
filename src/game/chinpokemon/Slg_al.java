@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 public class Slg_al extends ChinpokemonObject {
     public Slg_al(String name) {
         super("Slg'al", name, new ImageIcon(Class.class.getResource("/rsc/essenceof_slg'al.png")).getImage());
+        this.maxHealth = this.power * 10; 
+        this.currentHealth =  this.maxHealth;
         this.ability = new AbillityObject("DOOM!", this.power * 7, 1);
     }
     
@@ -29,6 +31,8 @@ public class Slg_al extends ChinpokemonObject {
     
     public Slg_al() {
         super("Slg'al", "Essence of Slg'al", new ImageIcon(Class.class.getResource("/rsc/essenceof_slg'al.png")).getImage());
+        this.maxHealth = this.power * 10; 
+        this.currentHealth =  this.maxHealth;
         this.ability = new AbillityObject("DOOM!", this.power * 7, 1);
     }
 

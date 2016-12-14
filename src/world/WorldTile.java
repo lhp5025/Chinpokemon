@@ -28,6 +28,7 @@ public abstract class WorldTile implements Serializable {
         TILE_IMGICON_MAP.put("water_a1", new ImageIcon(Class.class.getResource("/rsc/water_a1.gif")) );
         TILE_IMGICON_MAP.put("wall_basic_1", new ImageIcon(Class.class.getResource("/rsc/wall_basic_1.png")) );
         TILE_IMGICON_MAP.put("shrub_basic", new ImageIcon(Class.class.getResource("/rsc/shrub_basic.png")) );
+        TILE_IMGICON_MAP.put("crate", new ImageIcon(Class.class.getResource("/rsc/crate.png")) );
     }
     
     protected ImageIcon bg_image = null;

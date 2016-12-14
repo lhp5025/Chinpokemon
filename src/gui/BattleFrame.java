@@ -7,6 +7,7 @@ package gui;
 
 import game.GameObject;
 import game.PlayerObject;
+import javax.swing.text.DefaultCaret;
 
 /**
  *
@@ -17,39 +18,60 @@ public class BattleFrame extends javax.swing.JInternalFrame {
     /**
      * Creates new form BattleFrame
      */
-    
     private GameObject game;
-    
+
     public BattleFrame() {
         initComponents();
     }
-    
-     public void upDate() {
-         enemyHealth.setText(  String.format( "%.1f%%", game.battleSystem.getEnemy().getCurrentHealth() /game.battleSystem.getEnemy().getMaxHealth() * 100) );
-         playerHealth.setText( String.format( "%.1f%%" , game.battleSystem.getPlayer().getCurrentHealth() /game.battleSystem.getPlayer().getMaxHealth() * 100 )  );
-     
-     }
-    
+
+    public void upDate(String _msg) {
+        // Display enemy stats
+        if (game.battleSystem.getEnemy() != null) {
+            enemyName.setText((game.battleSystem.getEnemy().getName()));
+            enemyPower.setText(String.valueOf(game.battleSystem.getEnemy().getPower()));
+            enemyHealth.setText(String.format("%s (%.1f%%)", game.battleSystem.getEnemy().getCurrentHealth(), game.battleSystem.getEnemy().getCurrentHealth() / game.battleSystem.getEnemy().getMaxHealth() * 100));
+        }
+
+        // Display player stats
+        if (game.battleSystem.getPlayer() != null) {
+            playerName.setText((game.battleSystem.getPlayer().getName()));
+            playerPower.setText(String.valueOf(game.battleSystem.getPlayer().getPower()));
+            playerHealth.setText(String.format("%s (%.1f%%)", game.battleSystem.getPlayer().getCurrentHealth(), game.battleSystem.getPlayer().getCurrentHealth() / game.battleSystem.getPlayer().getMaxHealth() * 100));
+        }
+        
+        jTextArea1.append(_msg);
+        jTextArea1.setCaretPosition(jTextArea1.getDocument().getLength());
+        //((DefaultCaret)jTextArea1.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        //jScrollPane1.getVerticalScrollBar().setValue( jScrollPane1.getVerticalScrollBar().getMaximum() );
+    }
+
     public void ReInit(GameObject _game) {
         game = _game;
-        
-        enemy_chinpokemon_img.setImage( game.battleSystem.getEnemy().getImageDefault() );
-        player_chinpokemon_image.setImage( game.battleSystem.getPlayer().getImageDefault() );
-        
+        jTextArea1.setText("");
+        enemy_chinpokemon_img.setImage(game.battleSystem.getEnemy().getImageDefault());
+        player_chinpokemon_image.setImage(game.battleSystem.getPlayer().getImageDefault());
+
         // Display enemy stats
-        enemyName.setText(( game.battleSystem.getEnemy().getName() ) );
-        enemyPower.setText( String.valueOf(game.battleSystem.getEnemy().getPower()) );
-        enemyHealth.setText(  String.format( "%.1f%%", game.battleSystem.getEnemy().getCurrentHealth() /game.battleSystem.getEnemy().getMaxHealth() * 100) );
-        
+        if (game.battleSystem.getEnemy() != null) {
+            enemyName.setText((game.battleSystem.getEnemy().getName()));
+            enemyPower.setText(String.valueOf(game.battleSystem.getEnemy().getPower()));
+            enemyHealth.setText(String.format("%s (%.1f%%)", game.battleSystem.getEnemy().getCurrentHealth(), game.battleSystem.getEnemy().getCurrentHealth() / game.battleSystem.getEnemy().getMaxHealth() * 100));
+        }
+
         // Display player stats
-        playerName.setText(( game.battleSystem.getPlayer().getName() ));
-        playerPower.setText( String.valueOf(game.battleSystem.getPlayer().getPower()));
-        playerHealth.setText( String.format( "%.1f%%" , game.battleSystem.getPlayer().getCurrentHealth() /game.battleSystem.getPlayer().getMaxHealth() * 100 )  );
+        if (game.battleSystem.getPlayer() != null) {
+            playerName.setText((game.battleSystem.getPlayer().getName()));
+            playerPower.setText(String.valueOf(game.battleSystem.getPlayer().getPower()));
+            playerHealth.setText(String.format("%s (%.1f%%)", game.battleSystem.getPlayer().getCurrentHealth(), game.battleSystem.getPlayer().getCurrentHealth() / game.battleSystem.getPlayer().getMaxHealth() * 100));
+        }
         
-        actionButton.setText( game.battleSystem.getPlayer().ability.toString() );
+        
+
+        actionButton.setText(game.battleSystem.getPlayer().ability.toString());
+        
         
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,12 +146,20 @@ public class BattleFrame extends javax.swing.JInternalFrame {
         );
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
-
-        jScrollPane1.setEnabled(false);
+        jPanel4.setFocusable(false);
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setFocusable(false);
+        jTextArea1.setHighlighter(null);
+        jTextArea1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTextArea1PropertyChange(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton1.setText("Capture");
@@ -159,8 +189,8 @@ public class BattleFrame extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(actionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,16 +201,16 @@ public class BattleFrame extends javax.swing.JInternalFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                             .addComponent(actionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)))
                 .addGap(14, 14, 14))
         );
 
@@ -194,7 +224,7 @@ public class BattleFrame extends javax.swing.JInternalFrame {
         jLabel2.setText("Name : ");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Power : ");
+        jLabel3.setText("Level : ");
 
         enemyName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         enemyName.setText("_");
@@ -216,18 +246,18 @@ public class BattleFrame extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(enemyHealth, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(enemyName, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(enemyName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(enemyPower, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(enemyHealth, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(151, Short.MAX_VALUE))
+                        .addComponent(enemyPower, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,7 +287,7 @@ public class BattleFrame extends javax.swing.JInternalFrame {
         playerPower.setText("_");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel9.setText("Power : ");
+        jLabel9.setText("Level : ");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Health : ");
@@ -273,18 +303,18 @@ public class BattleFrame extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(playerHealth, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(playerName, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(playerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(playerPower, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(playerHealth, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(151, Short.MAX_VALUE))
+                        .addComponent(playerPower, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,7 +342,7 @@ public class BattleFrame extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -353,11 +383,9 @@ public class BattleFrame extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(player_chinpokemon_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(player_chinpokemon_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(enemy_chinpokemon_img, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -375,7 +403,7 @@ public class BattleFrame extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -383,8 +411,9 @@ public class BattleFrame extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // End battle by passing players retreat action
-        game.battleSystem.PlayerAction(PlayerObject.RETREAT);
+        game.battleSystem.PlayerAction(PlayerObject.RETREAT);  
         
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -396,6 +425,10 @@ public class BattleFrame extends javax.swing.JInternalFrame {
         // Do the chinpokemons Ability
         game.battleSystem.PlayerAction(game.battleSystem.getPlayer().ability);
     }//GEN-LAST:event_actionButtonActionPerformed
+
+    private void jTextArea1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextArea1PropertyChange
+        
+    }//GEN-LAST:event_jTextArea1PropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

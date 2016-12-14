@@ -16,27 +16,31 @@ import javax.swing.ImageIcon;
 public class Sickdog extends ChinpokemonObject{
     public Sickdog(String name) {
         super("Sickdog", name, new ImageIcon(Class.class.getResource("/rsc/sickdog.png")).getImage());
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
+        this.maxHealth = this.power * 20; 
+        this.currentHealth =  this.maxHealth;
+        this.ability = new AbillityObject("Attack", this.power * 4, this.power * 0);
     }
     
     public Sickdog(int _pwer) {
         super("Sickdog", "Sickdog", new ImageIcon(Class.class.getResource("/rsc/sickdog.png")).getImage());
         this.power = _pwer;
-        this.maxHealth = this.power * 2; 
+        this.maxHealth = this.power * 20; 
         this.currentHealth =  this.maxHealth;
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
+        this.ability = new AbillityObject("Attack", this.power * 4, this.power * 0);
     }
     
     public Sickdog() {
         super("Sickdog", "Sickdog", new ImageIcon(Class.class.getResource("/rsc/sickdog.png")).getImage());
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
+        this.maxHealth = this.power * 20; 
+        this.currentHealth =  this.maxHealth;
+        this.ability = new AbillityObject("Attack", this.power * 4, this.power * 0);
     }
 
     @Override
     public void feed() {
         this.power++; // Increase power level
-        this.maxHealth += 1; // Increase max health
-        this.currentHealth += 1; // Increase current heath
-        this.ability.upgrade(5, 1); // Increase abilites power
+        this.maxHealth += 5; // Increase max health
+        this.currentHealth += 5; // Increase current heath
+        this.ability.upgrade(4, 0); // Increase abilites power
     }
 }

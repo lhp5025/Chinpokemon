@@ -40,8 +40,8 @@ public class PlayerObject {
     
     public PlayerObject() {
         inventory.add(new ChinpokeSlurry());
-        inventory.add(new Shoe() );
-        inventory.add(new Shoe(10) );
+        inventory.add(new Shoe(20) );
+        inventory.add(new Cellary(30) );
     }
     
 }

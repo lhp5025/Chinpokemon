@@ -29,10 +29,12 @@ public class Zone implements Serializable {
     public final static WorldTile sidewalk = new FloorTile(  "sidewalk_1", "sidewalk" );
     public final static WorldTile dirt = new FloorTile( "dirt_1", "dirt" );
     public final static WorldTile dirt_puddle = new FloorTile( "dirt_puddle_1", "dirt" );
+    
     // Wall tiles
     public final static WorldTile water = new WallTile( "water_a1","water" );
     public final static WorldTile wall_basic = new WallTile( "wall_basic_1", "wall" );
     public final static WorldTile shrub_basic = new WallTile( "shrub_basic", "shrub" );
+    public final static WorldTile crate = new WallTile( "crate", "crate" );
     
     public WorldTile[][] getZone_tiles() {
         return zone_tiles;

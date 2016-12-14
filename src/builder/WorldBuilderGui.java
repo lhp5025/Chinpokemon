@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Random;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import world.TileProbability;
@@ -58,7 +59,15 @@ public class WorldBuilderGui extends javax.swing.JFrame {
                 if (i == 0 || j == 0 || i == worldSizeX - 1 || j == worldSizeY - 1) {
                     worldArray[i][j] = Zone.wall_basic;
                 } else {
-                    worldArray[i][j] = Zone.grass_1;
+                    int rng = new Random().nextInt(3);
+                    if (rng == 0) {
+                        worldArray[i][j] = Zone.grass_1;
+                    } else if (rng == 1 ) {
+                        worldArray[i][j] = Zone.grass_2;
+                    } else if (rng == 2 ) {
+                        worldArray[i][j] = Zone.grass_3;
+                    }
+                    
                 }
             }
         }
@@ -77,13 +86,13 @@ public class WorldBuilderGui extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
         encountersDialog = new javax.swing.JDialog();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tileTypeList = new javax.swing.JList<>();
+        tileTypeList = new javax.swing.JList<String>();
         jScrollPane5 = new javax.swing.JScrollPane();
-        hashMapKeys = new javax.swing.JList<>();
+        hashMapKeys = new javax.swing.JList<String>();
         jPanel2 = new javax.swing.JPanel();
         ySizeField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tileList = new javax.swing.JList<>();
+        tileList = new javax.swing.JList<String>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         exportButton = new javax.swing.JButton();
@@ -96,17 +105,17 @@ public class WorldBuilderGui extends javax.swing.JFrame {
 
         jFileChooser1.setCurrentDirectory(null);
 
-        tileTypeList.setModel(new javax.swing.AbstractListModel<String>() {
+        tileTypeList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane3.setViewportView(tileTypeList);
 
-        hashMapKeys.setModel(new javax.swing.AbstractListModel<String>() {
+        hashMapKeys.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane5.setViewportView(hashMapKeys);
 
@@ -137,10 +146,10 @@ public class WorldBuilderGui extends javax.swing.JFrame {
 
         ySizeField.setText("32");
 
-        tileList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "grass", "sidewalk", "dirt", "dirt_puddle", "water", "wall_basic", "shrub_basic" };
+        tileList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "grass", "sidewalk", "dirt", "dirt_puddle", "water", "wall_basic", "shrub_basic", "crate" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         tileList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -297,6 +306,9 @@ public class WorldBuilderGui extends javax.swing.JFrame {
                 break;
             case 6:
                 worldBuilderPanel.setCurrentTile(createdZone.shrub_basic);
+                break;
+            case 7:
+                worldBuilderPanel.setCurrentTile(createdZone.crate);
                 break;
         }
     }//GEN-LAST:event_tileListValueChanged

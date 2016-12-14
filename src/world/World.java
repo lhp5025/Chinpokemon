@@ -95,20 +95,28 @@ public class World {
             Random rng = new Random(System.currentTimeMillis());
             int encoutnerProbability_1 = rng.nextInt(1000) + 1; // Gen a random number from 1 to 1000
             
+            final int max_level = 100;
             
             // Uncommon .01% outnerProbability_2chance of encounter
             if (encoutnerProbability_1 % 1000 == 0) {
-                int encoutnerProbability_2 = rng.nextInt(2); // Gen a random number to pick the chinpokemon
+                int encoutnerProbability_2 = rng.nextInt(4); // Gen a random number to pick the chinpokemon
                 
-                if (encoutnerProbability_2 == 0) TO_RETURN = new Slg_al( rng.nextInt(25) + 1); // Return shoe of level 1 to 25
-                else if (encoutnerProbability_2 == 1) TO_RETURN = new Deaddog( rng.nextInt(25) + 1); // Return shoe of level 1 to 25
+                if (encoutnerProbability_2 == 0) TO_RETURN = new Slg_al( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 1) TO_RETURN = new Deaddog( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 2) TO_RETURN = new Orb( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 3) TO_RETURN = new Rabbiddog( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
             }
             // Common .1% chanceof encounter
             else if (encoutnerProbability_1 % 100 == 0) {
-                int encoutnerProbability_2 = rng.nextInt(2);  // Gen a random number to pick the chinpokemon
+                int encoutnerProbability_2 = rng.nextInt(7);  // Gen a random number to pick the chinpokemon
                 
-                if (encoutnerProbability_2 == 0) TO_RETURN = new Shoe( rng.nextInt(25) + 1); // Return shoe of level 1 to 25
-                else if (encoutnerProbability_2 == 1) TO_RETURN = new Cellary( rng.nextInt(25) + 1); // Return shoe of level 1 to 25
+                if (encoutnerProbability_2 == 0) TO_RETURN = new Shoe( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 1) TO_RETURN = new Cellary( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 2) TO_RETURN = new Cherry( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 3) TO_RETURN = new Labtron( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 4) TO_RETURN = new Mushroom( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 5) TO_RETURN = new Sickdog( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 6) TO_RETURN = new Tapeworm( rng.nextInt(max_level) + 1); // Return shoe of level 1 to 25
             }
             
         }
@@ -121,7 +129,7 @@ public class World {
         WorldTile[][] temp_test = new WorldTile[32][32];
         Zone importZone;
         try {
-            ObjectInputStream in = new ObjectInputStream(Class.class.getResourceAsStream("/rsc/zoneTest.zone"));
+            ObjectInputStream in = new ObjectInputStream(Class.class.getResourceAsStream("/rsc/zone_1.zone"));
             importZone = (Zone) in.readObject();
             current_zone = importZone;
         } catch (Exception e) {

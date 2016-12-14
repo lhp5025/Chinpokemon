@@ -16,27 +16,31 @@ import javax.swing.ImageIcon;
 public class Tapeworm extends ChinpokemonObject{
     public Tapeworm(String name) {
         super("Tapeworm", name, new ImageIcon(Class.class.getResource("/rsc/tapeworm.png")).getImage());
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
+        this.maxHealth = this.power * 30; 
+        this.currentHealth =  this.maxHealth;
+        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 5);
     }
     
     public Tapeworm(int _pwer) {
         super("Tapeworm", "Tapeworm", new ImageIcon(Class.class.getResource("/rsc/tapeworm.png")).getImage());
         this.power = _pwer;
-        this.maxHealth = this.power * 2; 
+        this.maxHealth = this.power * 30; 
         this.currentHealth =  this.maxHealth;
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
+        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 5);
     }
     
     public Tapeworm() {
         super("Tapeworm", "Tapeworm", new ImageIcon(Class.class.getResource("/rsc/tapeworm.png")).getImage());
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
+        this.maxHealth = this.power * 30; 
+        this.currentHealth =  this.maxHealth;
+        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 5);
     }
 
     @Override
     public void feed() {
         this.power++; // Increase power level
-        this.maxHealth += 3; // Increase max health
-        this.currentHealth += 3; // Increase current heath
-        this.ability.upgrade(3, 5); // Increase abilites power
+        this.maxHealth += 15; // Increase max health
+        this.currentHealth += 15; // Increase current heath
+        this.ability.upgrade(1, 1); // Increase abilites power
     }
 }

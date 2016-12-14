@@ -15,18 +15,17 @@ import javax.swing.JPanel;
  * @author Luke
  */
 public class ImagePanel extends JPanel{
-    private Image image;
+    private Image image = null;
     public Boolean aspectLock = false;
     
     
     public ImagePanel(Image _img) {
         super();
-        image = image;
+        image = _img;
     }
     
     public ImagePanel() {
         super();
-        image = null;
     }
     
     public void setImage(Image _img) {
@@ -42,12 +41,10 @@ public class ImagePanel extends JPanel{
     public void paint(Graphics g) {
         super.paint(g);
         
-        if (aspectLock) { 
-            int maxDimension = Math.min(this.getWidth(), this.getHeight());
-            this.setSize(maxDimension, maxDimension);
-            this.setPreferredSize(new Dimension(maxDimension, maxDimension));
+        
+        if (image != null) {
+            g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
         }
         
-        g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
     }
 }
