@@ -93,14 +93,15 @@ public class World {
         // If the player is on a dirt or grass tyle
         if ( current_zone.getZone_tiles()[x][y].getName().equals("grass")  || current_zone.getZone_tiles()[x][y].getName().equals("dirt") ) {
             Random rng = new Random(System.currentTimeMillis());
-            int encoutnerProbability_1 = rng.nextInt(1000) + 1; // Gen a random number from 1 to 100
+            int encoutnerProbability_1 = rng.nextInt(1000) + 1; // Gen a random number from 1 to 1000
             
             
-            // Uncommon .01% chance of encounter
+            // Uncommon .01% outnerProbability_2chance of encounter
             if (encoutnerProbability_1 % 1000 == 0) {
-                int encoutnerProbability_2 = rng.nextInt(1); // Gen a random number to pick the chinpokemon
+                int encoutnerProbability_2 = rng.nextInt(2); // Gen a random number to pick the chinpokemon
                 
                 if (encoutnerProbability_2 == 0) TO_RETURN = new Slg_al( rng.nextInt(25) + 1); // Return shoe of level 1 to 25
+                else if (encoutnerProbability_2 == 1) TO_RETURN = new Deaddog( rng.nextInt(25) + 1); // Return shoe of level 1 to 25
             }
             // Common .1% chanceof encounter
             else if (encoutnerProbability_1 % 100 == 0) {
