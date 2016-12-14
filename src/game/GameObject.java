@@ -13,6 +13,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.beans.PropertyVetoException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -56,7 +57,20 @@ public class GameObject extends JFrame implements Runnable {
     
     public void battleSysStart(ChinpokemonObject _enemy) {
         // Open battle window
-        battleSystem.newBattle(_enemy, player_1.activeChinpokemon);
+        if (player_1.activeChinpokemon == null) {
+            if (player_1.inventory.getChinpokemon().size() == 0) {
+                // Error, no chinokemon to battle
+            } else {
+                player_1.activeChinpokemon = player_1.inventory.getChinpokemon().get(new Random().nextInt( player_1.inventory.getChinpokemon().size() ) );
+                battleSystem.newBattle(_enemy, player_1.activeChinpokemon);
+            }
+        } 
+        else {
+            battleSystem.newBattle(_enemy, player_1.activeChinpokemon);
+        }
+        
+        
+        battle_pannel.requestFocus();
         battle_pannel.ReInit(this);
         battle_pannel.setVisible(true);
         
@@ -70,13 +84,17 @@ public class GameObject extends JFrame implements Runnable {
         this.battleSystem.newBattle(_enemy, player_1.activeChinpokemon);
     }
     
+    public void battleStateChange() {
+        battle_pannel.upDate();
+    }
+    
     public void battleSysEnd() {
         // Close battle window
         battle_pannel.setVisible(false);
         
-        
         // Readd Key listensrws
         this.addKeyListener( new KeyBindings() ); // Add key listeners
+        this.requestFocus();
     }
     
     public GameObject() {
@@ -183,6 +201,7 @@ public class GameObject extends JFrame implements Runnable {
             // Open close inventory
             if (ke.getKeyChar() == 'i' || ke.getKeyChar() == 'I'){
                 game_inventory_panel.repaint();
+                game_inventory_panel.reInit();
                 game_inventory_panel.setVisible( !game_inventory_panel.isVisible() );
             }
             

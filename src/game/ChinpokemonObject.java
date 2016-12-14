@@ -69,6 +69,10 @@ public abstract class ChinpokemonObject {
         return power;
     }
     
+    public void damage(double n) {
+        currentHealth -= n;
+    }
+    
     public Image getImageDefault() {
         return this.defualt_pos_img;
     }

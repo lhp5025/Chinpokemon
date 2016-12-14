@@ -20,6 +20,12 @@ public class Inventory_Panel extends javax.swing.JPanel {
     public void paint(Graphics g) {
         super.paint(g);
     }
+    
+    public void reInit() { 
+        inventoryList.setListData(game_data.player_1.inventory.getItems().toArray());
+        chinpokemonList.setListData(game_data.player_1.inventory.getChinpokemon().toArray());
+
+    }
 
     private final GameObject game_data;
 
@@ -63,6 +69,11 @@ public class Inventory_Panel extends javax.swing.JPanel {
 
         setFocusable(false);
         setMinimumSize(new java.awt.Dimension(600, 500));
+        addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                formPropertyChange(evt);
+            }
+        });
 
         outputText.setEnabled(false);
         outputText.setFocusable(false);
@@ -381,6 +392,10 @@ public class Inventory_Panel extends javax.swing.JPanel {
             imageOutPanel.setImage(((ChinpokemonObject) chinpokemonList.getSelectedValue()).getImageDefault());
         }
     }//GEN-LAST:event_setActiveActionPerformed
+
+    private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
+        
+    }//GEN-LAST:event_formPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

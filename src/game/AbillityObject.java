@@ -35,6 +35,6 @@ public class AbillityObject{
     
     @Override
     public String toString() {
-        return this.name + "\n D=" + this.damage + ";" + " H=" + this.helaing;
+        return this.name + "\n  (D=" + this.damage + ";" + " H=" + this.helaing + ")";
     }
 }
