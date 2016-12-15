@@ -64,7 +64,6 @@ public class Inventory_Panel extends javax.swing.JPanel {
         inventoryPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         inventoryList = new javax.swing.JList();
-        itemUseButton = new javax.swing.JButton();
         itemDeleteButton = new javax.swing.JButton();
 
         setFocusable(false);
@@ -218,14 +217,6 @@ public class Inventory_Panel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(inventoryList);
 
-        itemUseButton.setText("Use");
-        itemUseButton.setFocusable(false);
-        itemUseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemUseButtonActionPerformed(evt);
-            }
-        });
-
         itemDeleteButton.setText("Delete");
         itemDeleteButton.setFocusable(false);
         itemDeleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -242,9 +233,7 @@ public class Inventory_Panel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-                .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(itemUseButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemDeleteButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(itemDeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         inventoryPanelLayout.setVerticalGroup(
@@ -253,8 +242,7 @@ public class Inventory_Panel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inventoryPanelLayout.createSequentialGroup()
-                        .addComponent(itemUseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(itemDeleteButton))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE))
                 .addContainerGap())
@@ -293,10 +281,6 @@ public class Inventory_Panel extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_inventoryListMouseClicked
-
-    private void itemUseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemUseButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_itemUseButtonActionPerformed
 
     private void itemDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDeleteButtonActionPerformed
         if (inventoryList.getSelectedIndex() != -1) {
@@ -408,7 +392,6 @@ public class Inventory_Panel extends javax.swing.JPanel {
     private javax.swing.JList inventoryList;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JButton itemDeleteButton;
-    private javax.swing.JButton itemUseButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;

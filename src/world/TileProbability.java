@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
+/** 
+ * TileProbability : for managing Chinpokemon encounters
+ */
 public class TileProbability implements Serializable {
     public NavigableMap<Integer, String> map = new TreeMap<Integer, String>();
     

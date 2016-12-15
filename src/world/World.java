@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package world;
 
 import game.ChinpokemonObject;
@@ -22,26 +18,28 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 /**
- *
  * @author LHP5025
+ * 
+ * World Object : for managing the zone, player, collision, movement, and encounters
  */
 public class World {
 
-    private final GameObject game_data;
-    private ArrayList<Zone> zones = new ArrayList<>();
-    private Zone current_zone;
-    private Vector player_location = new Vector(4.0, 4.0);
+    private final GameObject game_data; // The parent game object
+    private Zone current_zone; // The current zone of the world
+    private Vector player_location = new Vector(4.0, 4.0); // The players posision in the world
     
-    Random generator = new Random();
-
-    private boolean collisionDetection(double x, double y) {
-        return false;
-    }
-
+    // Method for movieing the player
+    /// A vecor is passed for the players velocity
+    /// the vector is then normalized and multipled by the players movement speed
+    /// and teh players posision is adjusted accordingly
+    //// Checks for collions
+    ///// Checks for Chinpokemon ecnounters
     public void movePlayer(Vector _input) {
+        // Normalize and multiply
         double movement_speed = .15 * game_data.getTheta_time();
         double magnitude = Math.sqrt(_input.getX() * _input.getX() + _input.getY() * _input.getY());
-
+        
+        // If the player wants to move
         if (magnitude != 0) {
             Point2D normal = new Point.Double(_input.getX() / magnitude, _input.getY() / magnitude);
 
@@ -65,7 +63,8 @@ public class World {
         }
 
     }
-
+    
+    // Method for checking collision of a position
     private boolean checkCollision(Vector _pos) {
         try {
             // If the current tile is a floor (i.e. it doesn not enact collision)
@@ -73,7 +72,7 @@ public class World {
                 return true;
             }
         } catch (Exception e) {
-            // If out of bounds
+            // If out of bounds, don;t move there
             return false;
         }
         return false;
@@ -87,6 +86,7 @@ public class World {
         return current_zone;
     }
     
+    // Method for determining what Chinpokemon was encountered
     public ChinpokemonObject getEncounter(int x, int y) {
         ChinpokemonObject TO_RETURN = null; // Chinpokemon to return
         
@@ -95,7 +95,7 @@ public class World {
             Random rng = new Random(System.currentTimeMillis());
             int encoutnerProbability_1 = rng.nextInt(1000) + 1; // Gen a random number from 1 to 1000
             
-            final int max_level = 100;
+            final int max_level = 100; // The max level of spawing chinpokemon
             
             // Uncommon .01% outnerProbability_2chance of encounter
             if (encoutnerProbability_1 % 1000 == 0) {
@@ -123,7 +123,7 @@ public class World {
         return TO_RETURN;
     }
 
-    //!! 
+    // Constructor, load zone from resources
     public World(GameObject _game_data) {
         game_data = _game_data;
         WorldTile[][] temp_test = new WorldTile[32][32];

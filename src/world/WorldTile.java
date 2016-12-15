@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package world;
 
 import java.awt.Image;
@@ -11,12 +7,13 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 /**
- *
  * @author LHP5025
+ * 
+ * Base class for all world tiles
  */
 public abstract class WorldTile implements Serializable {
     
-    // Tile image mapping
+    // Tile image has mapping for performance and memory saving
     public static final HashMap<String, ImageIcon> TILE_IMGICON_MAP = new  HashMap();
     static {
         TILE_IMGICON_MAP.put("grass_1", new ImageIcon(Class.class.getResource("/rsc/grass_1.png")) );
@@ -31,13 +28,12 @@ public abstract class WorldTile implements Serializable {
         TILE_IMGICON_MAP.put("crate", new ImageIcon(Class.class.getResource("/rsc/crate.png")) );
     }
     
-    protected ImageIcon bg_image = null;
-    protected ImageIcon fg_image = null;
-    protected String BG_IMGICON_MAP = "";
-    protected String FG_IMGICON_MAP = "";
-    protected String name = "";
-    public final String type;
-
+    protected String BG_IMGICON_MAP = ""; // The mapping to the background image to the hash table
+    protected String FG_IMGICON_MAP = ""; // The mapping to the foregrond image to the hash table
+    protected String name = ""; // The name of the tile
+    public final String type; // The type of tyle (i.e. floor, wall, ...)
+    
+    
     public Image getBg_image() {
         return TILE_IMGICON_MAP.get(BG_IMGICON_MAP).getImage();
     }

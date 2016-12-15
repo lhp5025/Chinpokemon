@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package world;
 
 import javax.swing.ImageIcon;
 
 /**
- *
  * @author LHP5025
+ * 
+ * Class : for all Wall type tiles
  */
 public class WallTile extends WorldTile {
     

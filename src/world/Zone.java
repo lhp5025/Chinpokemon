@@ -1,26 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package world;
 
-import game.ChinpokemonObject;
-import java.awt.Image;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import javax.swing.ImageIcon;
 
 /**
- *
  * @author LHP5025
+ * 
+ * Zone base object
  */
 public class Zone implements Serializable {
+    // 2D array of the world tiles that make up the zone
     private final WorldTile[][] zone_tiles; // X, Y
     public final String name;
-    public final int width;
-    public final int heihgt;
+    public final int width; // The width of the zone
+    public final int heihgt; // THe height of the zone
  
     // Floor Tiles
     public final static WorldTile grass_1 = new FloorTile( "grass_1", "grass" );

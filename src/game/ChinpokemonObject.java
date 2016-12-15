@@ -6,7 +6,7 @@ import java.awt.Image;
 /**
  * @author CXM818
  * 
- * 
+ * ChinpokemonObject : Master parent object for all Chinpokemon
  */
 public abstract class ChinpokemonObject {
 
@@ -18,7 +18,7 @@ public abstract class ChinpokemonObject {
     protected int power; // The current power/level
     public AbillityObject ability = new AbillityObject("ATTACK",1,0); // The default abiltiy
 
-    
+    // Constructor
     public ChinpokemonObject(String _species, String name, Image _img) {
         this.species = _species;
         this.name = name;
@@ -27,6 +27,8 @@ public abstract class ChinpokemonObject {
         this.maxHealth = this.currentHealth = 10;
     }
     
+    // Method for healing
+    /// Can't increase current health over max health
     public void heal(double n) {
         if (n + currentHealth > maxHealth) {
             currentHealth = maxHealth;
@@ -34,15 +36,12 @@ public abstract class ChinpokemonObject {
             currentHealth += n;
         }
     }
-
-    private void evolve() {
-
-    }
     
     public AbillityObject getAbility() {
         return this.ability;
     }
 
+    // Abstract method for feed
     public abstract void feed();
 
     public String getName() {

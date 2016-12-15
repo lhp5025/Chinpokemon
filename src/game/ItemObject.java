@@ -1,22 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package game;
 
 import java.awt.Image;
 
 /**
- *
  * @author CXM818
+ * 
+ *  Item Object
  */
 public abstract class ItemObject{
     
-    public final String name;
-    public final String description;
-    public final Image image;
+    public final String name; // Name of the item
+    public final String description; // Descpription of the item
+    public final Image image; // Image for the item
     
+    // Abstract method for using the item
     public abstract void use(ChinpokemonObject _obj);
     
     public ItemObject (String _name, String _desc, Image _img) {
