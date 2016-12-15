@@ -65,6 +65,15 @@ public class Inventory_Panel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         inventoryList = new javax.swing.JList();
         itemDeleteButton = new javax.swing.JButton();
+        infoPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextPane2 = new javax.swing.JTextPane();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTextPane3 = new javax.swing.JTextPane();
 
         setFocusable(false);
         setMinimumSize(new java.awt.Dimension(600, 500));
@@ -250,6 +259,61 @@ public class Inventory_Panel extends javax.swing.JPanel {
 
         tabPane.addTab("Inventory", inventoryPanel);
 
+        jLabel1.setText("Chinpokemon v1.0");
+
+        jLabel2.setText("Use W A S D to move");
+
+        jLabel4.setText("Alt+z shows some rendering stats");
+
+        jLabel5.setText("Open inventory with I");
+
+        jTextPane2.setEditable(false);
+        jTextPane2.setText("Move to encounter and battle Chinpokemon, but be careful, some wild Chinpokemon are quite strong.");
+        jTextPane2.setFocusCycleRoot(false);
+        jTextPane2.setFocusable(false);
+        jScrollPane5.setViewportView(jTextPane2);
+
+        jTextPane3.setEditable(false);
+        jTextPane3.setText("If you lose a battle, you Chinpokemon dies and a Chinpokeslurry is given to you.  If the enemy dies, you get a Chinpokeslurry ");
+        jTextPane3.setFocusCycleRoot(false);
+        jTextPane3.setFocusable(false);
+        jScrollPane6.setViewportView(jTextPane3);
+
+        javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
+        infoPanel.setLayout(infoPanelLayout);
+        infoPanelLayout.setHorizontalGroup(
+            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(infoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        infoPanelLayout.setVerticalGroup(
+            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(infoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(216, Short.MAX_VALUE))
+        );
+
+        tabPane.addTab("Info", infoPanel);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -389,12 +453,21 @@ public class Inventory_Panel extends javax.swing.JPanel {
     private javax.swing.JButton chinpokemonRenderButton;
     private javax.swing.JButton feedButton;
     private gui.ImagePanel imageOutPanel;
+    private javax.swing.JPanel infoPanel;
     private javax.swing.JList inventoryList;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JButton itemDeleteButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTextPane jTextPane2;
+    private javax.swing.JTextPane jTextPane3;
     private javax.swing.JPanel optPanel;
     private javax.swing.JTextPane outputText;
     private javax.swing.JButton renameButton;
