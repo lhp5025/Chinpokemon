@@ -18,7 +18,7 @@ public class Tapeworm extends ChinpokemonObject{
         super("Tapeworm", name, new ImageIcon(Class.class.getResource("/rsc/tapeworm.png")).getImage());
         this.maxHealth = this.power * 30; 
         this.currentHealth =  this.maxHealth;
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 5);
+        this.ability = new AbillityObject("Attack", this.power * 2, this.power * 2);
     }
     
     public Tapeworm(int _pwer) {
@@ -26,14 +26,14 @@ public class Tapeworm extends ChinpokemonObject{
         this.power = _pwer;
         this.maxHealth = this.power * 30; 
         this.currentHealth =  this.maxHealth;
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 5);
+        this.ability = new AbillityObject("Attack", this.power * 2, this.power * 2);
     }
     
     public Tapeworm() {
         super("Tapeworm", "Tapeworm", new ImageIcon(Class.class.getResource("/rsc/tapeworm.png")).getImage());
         this.maxHealth = this.power * 30; 
         this.currentHealth =  this.maxHealth;
-        this.ability = new AbillityObject("Attack", this.power * 1, this.power * 5);
+        this.ability = new AbillityObject("Attack", this.power * 2, this.power * 2);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class Tapeworm extends ChinpokemonObject{
         this.power++; // Increase power level
         this.maxHealth += 15; // Increase max health
         this.currentHealth += 15; // Increase current heath
-        this.ability.upgrade(1, 1); // Increase abilites power
+        this.ability.upgrade(2, 3); // Increase abilites power
     }
 }

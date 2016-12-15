@@ -30,7 +30,7 @@ public class World {
     private final GameObject game_data;
     private ArrayList<Zone> zones = new ArrayList<>();
     private Zone current_zone;
-    private Vector player_location = new Vector(2.0, 2.0);
+    private Vector player_location = new Vector(4.0, 4.0);
     
     Random generator = new Random();
 

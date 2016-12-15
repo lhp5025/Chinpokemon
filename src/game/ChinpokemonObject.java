@@ -1,26 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package game;
 
 import java.awt.Image;
 
 /**
- *
  * @author CXM818
+ * 
+ * 
  */
 public abstract class ChinpokemonObject {
 
-    //name, img, abillity array, 
-    private final Image defualt_pos_img;
-    private String name;
-    public final String species;
-    protected double maxHealth;
-    protected double currentHealth;
-    protected int power;
-    public AbillityObject ability = new AbillityObject("ATTACK",1,0);
+    private final Image defualt_pos_img; // The default image for the Chinpokemon
+    private String name; // The name
+    public final String species; // The species
+    protected double maxHealth; // The max health
+    protected double currentHealth; // The current health
+    protected int power; // The current power/level
+    public AbillityObject ability = new AbillityObject("ATTACK",1,0); // The default abiltiy
 
     
     public ChinpokemonObject(String _species, String name, Image _img) {

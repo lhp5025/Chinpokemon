@@ -1,18 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package game;
 
 /**
- *
  * @author CXM818
+ * 
+ * Ability Object : For Chinpokemon battling
  */
 public class AbillityObject{
-    private int damage;
-    private int helaing;
-    public final String name;
+    private int damage; // The damage to the enemy that the ability does
+    private int helaing; // The healing to the user of the ability
+    public final String name; // The name of the ability    
     
     public int getDamage() {
         return this.damage;
@@ -28,6 +25,7 @@ public class AbillityObject{
         this.helaing = _heal;
     }
     
+    // Increase the power of the ability
     public void upgrade(int _dmg, int _heal) {
         this.damage += _dmg;
         this.helaing += _heal;

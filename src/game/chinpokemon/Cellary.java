@@ -15,14 +15,14 @@ import javax.swing.ImageIcon;
  */
 public class Cellary extends ChinpokemonObject{
     public Cellary(String name) {
-        super("Cellary", name, new ImageIcon(Class.class.getResource("/rsc/cellary.png")).getImage());
+        super("Celery", name, new ImageIcon(Class.class.getResource("/rsc/cellary.png")).getImage());
         this.maxHealth = this.power * 10; 
         this.currentHealth =  this.maxHealth;
         this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
     }
     
     public Cellary(int _pwer) {
-        super("Cellary", "Cellary", new ImageIcon(Class.class.getResource("/rsc/cellary.png")).getImage());
+        super("Cellary", "Celery", new ImageIcon(Class.class.getResource("/rsc/cellary.png")).getImage());
         this.power = _pwer;
         this.maxHealth = this.power * 10; 
         this.currentHealth =  this.maxHealth;
@@ -30,7 +30,7 @@ public class Cellary extends ChinpokemonObject{
     }
     
     public Cellary() {
-        super("Cellary", "Cellary", new ImageIcon(Class.class.getResource("/rsc/cellary.png")).getImage());
+        super("Cellary", "Celery", new ImageIcon(Class.class.getResource("/rsc/cellary.png")).getImage());
         this.maxHealth = this.power * 10; 
         this.currentHealth =  this.maxHealth;
         this.ability = new AbillityObject("Attack", this.power * 1, this.power * 1);
