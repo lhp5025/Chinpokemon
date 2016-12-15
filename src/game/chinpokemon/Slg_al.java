@@ -41,6 +41,6 @@ public class Slg_al extends ChinpokemonObject {
         this.power++; // Increase power level
         this.maxHealth += 10; // Increase max health
         this.currentHealth += 10; // Increase current heath
-        this.ability.upgrade(7, 0); // Increase abilites power
+        this.ability.upgrade(40, 5); // Increase abilites power
     }
 }

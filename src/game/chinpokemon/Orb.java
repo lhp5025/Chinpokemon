@@ -41,6 +41,6 @@ public class Orb extends ChinpokemonObject{
         this.power++; // Increase power level
         this.maxHealth += 10; // Increase max health
         this.currentHealth += 10; // Increase current heath
-        this.ability.upgrade(3, 1); // Increase abilites power
+        this.ability.upgrade(15, 3); // Increase abilites power
     }
 }

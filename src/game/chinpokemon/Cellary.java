@@ -41,6 +41,6 @@ public class Cellary extends ChinpokemonObject{
         this.power++; // Increase power level
         this.maxHealth += 10; // Increase max health
         this.currentHealth += 10; // Increase current heath
-        this.ability.upgrade(1, 1); // Increase abilites power
+        this.ability.upgrade(5, 5); // Increase abilites power
     }
 }

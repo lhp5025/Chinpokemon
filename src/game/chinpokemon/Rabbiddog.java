@@ -41,6 +41,6 @@ public class Rabbiddog extends ChinpokemonObject{
         this.power++; // Increase power level
         this.maxHealth += 10; // Increase max health
         this.currentHealth += 10; // Increase current heath
-        this.ability.upgrade(6, 1); // Increase abilites power
+        this.ability.upgrade(30, 5); // Increase abilites power
     }
 }

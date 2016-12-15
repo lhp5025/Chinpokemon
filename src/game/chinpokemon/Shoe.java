@@ -41,7 +41,7 @@ public class Shoe extends ChinpokemonObject {
         this.power++; // Increase power level
         this.maxHealth += 25; // Increase max health
         this.currentHealth += 25; // Increase current heath
-        this.ability.upgrade(3, 0); // Increase abilites power
+        this.ability.upgrade(15, 5); // Increase abilites power
     }
     
 }

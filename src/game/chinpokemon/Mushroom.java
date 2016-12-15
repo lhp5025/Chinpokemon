@@ -41,6 +41,6 @@ public class Mushroom extends ChinpokemonObject{
         this.power++; // Increase power level
         this.maxHealth += 15; // Increase max health
         this.currentHealth += 15; // Increase current heath
-        this.ability.upgrade(1, 2); // Increase abilites power
+        this.ability.upgrade(5, 10); // Increase abilites power
     }
 }

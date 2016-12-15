@@ -41,6 +41,6 @@ public class Tapeworm extends ChinpokemonObject{
         this.power++; // Increase power level
         this.maxHealth += 15; // Increase max health
         this.currentHealth += 15; // Increase current heath
-        this.ability.upgrade(1, 1); // Increase abilites power
+        this.ability.upgrade(5, 5); // Increase abilites power
     }
 }

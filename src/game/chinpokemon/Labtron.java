@@ -42,6 +42,6 @@ public class Labtron extends ChinpokemonObject{
         this.power++; // Increase power level
         this.maxHealth += 15; // Increase max health
         this.currentHealth += 15; // Increase current heath
-        this.ability.upgrade(3, 1); // Increase abilites power
+        this.ability.upgrade(10, 5); // Increase abilites power
     }
 }

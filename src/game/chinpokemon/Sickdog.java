@@ -41,6 +41,6 @@ public class Sickdog extends ChinpokemonObject{
         this.power++; // Increase power level
         this.maxHealth += 5; // Increase max health
         this.currentHealth += 5; // Increase current heath
-        this.ability.upgrade(4, 0); // Increase abilites power
+        this.ability.upgrade(20, 2); // Increase abilites power
     }
 }

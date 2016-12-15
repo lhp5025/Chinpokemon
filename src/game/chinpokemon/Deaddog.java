@@ -41,6 +41,6 @@ public class Deaddog extends ChinpokemonObject{
         this.power++; // Increase power level
         this.maxHealth += 20; // Increase max health
         this.currentHealth += 20; // Increase current heath
-        this.ability.upgrade(1, 10); // Increase abilites power
+        this.ability.upgrade(5, 30); // Increase abilites power
     }
 }

@@ -41,6 +41,6 @@ public class Cherry extends ChinpokemonObject{
         this.power++; // Increase power level
         this.maxHealth += 10; // Increase max health
         this.currentHealth += 10; // Increase current heath
-        this.ability.upgrade(2, 1); // Increase abilites power
+        this.ability.upgrade(10, 5); // Increase abilites power
     }
 }
